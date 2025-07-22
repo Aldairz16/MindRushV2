@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Connection</title>
+</head>
+<body>
+    <h1>MindRush API Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testAPI() {
+            const results = document.getElementById('results');
+            
+            try {
+                console.log('Testing users endpoint...');
+                const usersResponse = await fetch('http://localhost:3001/users');
+                const users = await usersResponse.json();
+                
+                console.log('Testing courses endpoint...');
+                const coursesResponse = await fetch('http://localhost:3001/courses');
+                const courses = await coursesResponse.json();
+                
+                results.innerHTML = `
+                    <h2>✅ API Connection Successful</h2>
+                    <p><strong>Users found:</strong> ${users.length}</p>
+                    <p><strong>Courses found:</strong> ${courses.length}</p>
+                    <h3>Sample User:</h3>
+                    <pre>${JSON.stringify(users[0], null, 2)}</pre>
+                    <h3>Sample Course:</h3>
+                    <pre>${JSON.stringify(courses[0], null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('API Test failed:', error);
+                results.innerHTML = `
+                    <h2>❌ API Connection Failed</h2>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p>Make sure the JSON server is running on port 3001</p>
+                `;
+            }
+        }
+        
+        // Run test when page loads
+        window.onload = testAPI;
+    </script>
+</body>
+</html>

@@ -821,6 +821,20 @@
       },
       "completedAt": "2025-07-22T06:45:03.918Z",
       "timestamp": "2025-07-22T06:45:03.918Z"
+    },
+    {
+      "id": "activity-1753202505359",
+      "userId": "1",
+      "courseId": "js-advanced-2024",
+      "type": "trivia",
+      "score": 0,
+      "data": {
+        "score": 0,
+        "questions": 3,
+        "moduleId": "mod-1"
+      },
+      "completedAt": "2025-07-22T16:41:45.356Z",
+      "timestamp": "2025-07-22T16:41:45.356Z"
     }
   ]
 }

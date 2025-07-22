@@ -22,6 +22,7 @@ import { CourseCreator } from '../teacher/CourseCreator';
 import { StudentManager } from '../teacher/StudentManager';
 import { apiService, Course, User } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
+import { demoCourses } from '../../data/demoCourses';
 
 interface TeacherDashboardProps {
   user: User;
@@ -36,8 +37,6 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ user, active
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [serverStatus, setServerStatus] = useState<'online' | 'offline' | 'checking'>('checking');
-
-  const { user: currentUser } = useAuth();
 
   useEffect(() => {
     if (activeSection === 'dashboard') {
@@ -69,15 +68,36 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ user, active
     } catch (err) {
       console.error('Error loading dashboard data:', err);
       setServerStatus('offline');
-      setError('No se pudieron cargar los datos. Trabajando en modo offline.');
+      setError('No se pudieron cargar los datos. Mostrando datos de demostración.');
       
-      // Load from localStorage as fallback
-      const savedCourses = localStorage.getItem('courses');
-      if (savedCourses) {
-        const allCourses = JSON.parse(savedCourses);
-        const teacherCourses = allCourses.filter((course: Course) => course.instructorId === user.id.toString());
-        setCourses(teacherCourses);
-      }
+      // Use demo data as fallback
+      console.log('Using demo courses as fallback for teacher');
+      const teacherCourses = demoCourses.filter(course => course.instructorId === user.id.toString());
+      setCourses(teacherCourses);
+      
+      // Mock student data
+      const mockStudents: User[] = [
+        {
+          id: 1,
+          email: 'student1@demo.com',
+          password: '',
+          role: 'student',
+          name: 'Ana García',
+          avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150',
+          stats: { completedLevels: 5, currentLevel: 6, totalXP: 450 }
+        },
+        {
+          id: 2,
+          email: 'student2@demo.com',
+          password: '',
+          role: 'student',
+          name: 'Carlos Ruiz',
+          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+          stats: { completedLevels: 3, currentLevel: 4, totalXP: 280 }
+        }
+      ];
+      setStudents(mockStudents);
+      setEnrollments([]);
     } finally {
       setLoading(false);
     }
@@ -85,350 +105,306 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ user, active
 
   // Render different sections based on activeSection
   if (activeSection === 'courses') {
-    return <CourseManager />;
+    return <CourseManager user={user} />;
   }
 
   if (activeSection === 'create-course') {
-    return <CourseCreator onSave={() => {}} onCancel={() => onSectionChange?.('courses')} />;
+    return <CourseCreator user={user} />;
   }
 
   if (activeSection === 'students') {
-    return <StudentManager />;
+    return <StudentManager user={user} />;
   }
-
-  if (activeSection === 'analytics') {
-    return (
-      <div className="p-6">
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 text-white mb-6">
-          <h1 className="text-3xl font-bold mb-2">Analíticas</h1>
-          <p className="text-blue-100">Dashboard de analíticas avanzadas - Próximamente</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Calculate statistics
-  const totalStudents = enrollments.filter(enrollment => 
-    courses.some(course => course.id === enrollment.courseId)
-  ).length;
-
-  const totalEnrollments = enrollments.filter(enrollment => 
-    courses.some(course => course.id === enrollment.courseId)
-  ).length;
-
-  const averageRating = courses.length > 0 
-    ? courses.reduce((sum, course) => sum + course.rating, 0) / courses.length 
-    : 0;
-
-  const recentEnrollments = enrollments
-    .filter(enrollment => courses.some(course => course.id === enrollment.courseId))
-    .sort((a, b) => new Date(b.enrolledAt).getTime() - new Date(a.enrolledAt).getTime())
-    .slice(0, 5);
-
-  const stats = [
-    { 
-      label: 'Cursos Creados', 
-      value: courses.length.toString(), 
-      color: 'bg-blue-500',
-      icon: BookOpen,
-      change: '+2 este mes'
-    },
-    { 
-      label: 'Estudiantes Activos', 
-      value: totalStudents.toString(), 
-      color: 'bg-green-500',
-      icon: Users,
-      change: '+12 este mes'
-    },
-    { 
-      label: 'Inscripciones Totales', 
-      value: totalEnrollments.toString(), 
-      color: 'bg-purple-500',
-      icon: TrendingUp,
-      change: '+8 esta semana'
-    },
-    { 
-      label: 'Calificación Promedio', 
-      value: averageRating.toFixed(1), 
-      color: 'bg-yellow-500',
-      icon: Star,
-      change: 'Excelente'
-    },
-  ];
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-96">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando dashboard...</p>
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Cargando dashboard del docente...</p>
         </div>
       </div>
     );
   }
 
+  // Calculate stats
+  const totalStudents = students.length;
+  const totalCourses = courses.length;
+  const avgRating = courses.length > 0 ? (courses.reduce((sum, course) => sum + course.rating, 0) / courses.length).toFixed(1) : '0.0';
+  const totalEnrollments = enrollments.length;
+
   return (
-    <div className="space-y-4 lg:space-y-6 p-4 lg:p-6">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 lg:p-6 rounded-xl">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl lg:text-3xl font-bold mb-2">Panel del Profesor</h1>
-            <p className="text-blue-100 text-sm lg:text-base">Bienvenido, {user.name}</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header with Server Status */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Dashboard del Docente</h1>
+              <p className="text-gray-600 mt-1">Bienvenido/a, {user.name}</p>
+            </div>
+            
+            {/* Server Status Indicator */}
+            <div className={`flex items-center px-3 py-2 rounded-full ${
+              serverStatus === 'online' ? 'bg-green-100 text-green-800' : 
+              serverStatus === 'offline' ? 'bg-yellow-100 text-yellow-800' : 
+              'bg-blue-100 text-blue-800'
+            }`}>
+              {serverStatus === 'online' ? (
+                <><Wifi className="w-4 h-4 mr-2" /> Conectado</>
+              ) : serverStatus === 'offline' ? (
+                <><WifiOff className="w-4 h-4 mr-2" /> Modo offline</>
+              ) : (
+                <><div className="w-4 h-4 mr-2 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" /> Verificando...</>
+              )}
+            </div>
           </div>
           
-          {/* Server Status */}
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600">
-            {serverStatus === 'online' && (
-              <>
-                <Wifi className="w-4 h-4 text-blue-200" />
-                <span className="text-sm text-blue-100">Sincronizado</span>
-              </>
-            )}
-            {serverStatus === 'offline' && (
-              <>
-                <WifiOff className="w-4 h-4 text-red-200" />
-                <span className="text-sm text-red-100">Offline</span>
-              </>
-            )}
-            {serverStatus === 'checking' && (
-              <>
-                <div className="w-4 h-4 border-2 border-blue-200 border-t-transparent rounded-full animate-spin" />
-                <span className="text-sm text-blue-100">Conectando...</span>
-              </>
-            )}
-          </div>
-        </div>
-        
-        <div className="mt-4 flex items-center space-x-4 lg:space-x-6 text-sm lg:text-base">
-          <div className="flex items-center">
-            <BookOpen className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
-            <span>{courses.length} Cursos</span>
-          </div>
-          <div className="flex items-center">
-            <Users className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
-            <span>{totalStudents} Estudiantes</span>
-          </div>
-          <div className="flex items-center">
-            <Star className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
-            <span>{averageRating.toFixed(1)} Rating</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
-          <AlertCircle className="w-5 h-5" />
-          {error}
-        </div>
-      )}
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <div key={index} className="bg-white p-4 lg:p-6 rounded-lg shadow-sm border">
-              <div className="flex items-center justify-between mb-3">
-                <Icon className="w-5 h-5 lg:w-6 lg:h-6 text-gray-500" />
-                <div className={`w-3 h-3 rounded-full ${stat.color}`}></div>
+          {error && (
+            <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+              <div className="flex items-center">
+                <AlertCircle className="w-5 h-5 text-yellow-600 mr-2" />
+                <p className="text-yellow-800 text-sm">{error}</p>
               </div>
-              <div className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
-              <div className="text-xs lg:text-sm text-gray-600 mb-1">{stat.label}</div>
-              <div className="text-xs text-green-600">{stat.change}</div>
             </div>
-          );
-        })}
+          )}
+        </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <button
-          onClick={() => onSectionChange?.('create-course')}
-          className="bg-gradient-to-r from-green-500 to-teal-600 p-6 rounded-xl text-white text-left hover:from-green-600 hover:to-teal-700 transition-all"
-        >
-          <Plus className="w-8 h-8 mb-3" />
-          <h3 className="text-lg font-semibold mb-2">Crear Nuevo Curso</h3>
-          <p className="text-green-100 text-sm">Diseña contenido educativo innovador</p>
-        </button>
-
-        <button
-          onClick={() => onSectionChange?.('courses')}
-          className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 rounded-xl text-white text-left hover:from-blue-600 hover:to-indigo-700 transition-all"
-        >
-          <Edit className="w-8 h-8 mb-3" />
-          <h3 className="text-lg font-semibold mb-2">Gestionar Cursos</h3>
-          <p className="text-blue-100 text-sm">Edita y administra tus cursos existentes</p>
-        </button>
-
-        <button
-          onClick={() => onSectionChange?.('students')}
-          className="bg-gradient-to-r from-purple-500 to-pink-600 p-6 rounded-xl text-white text-left hover:from-purple-600 hover:to-pink-700 transition-all"
-        >
-          <Users className="w-8 h-8 mb-3" />
-          <h3 className="text-lg font-semibold mb-2">Ver Estudiantes</h3>
-          <p className="text-purple-100 text-sm">Monitorea el progreso de tus estudiantes</p>
-        </button>
-      </div>
-
-      {/* Recent Activity & My Courses */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* My Courses */}
-        <div className="bg-white rounded-xl shadow-sm border">
-          <div className="p-4 lg:p-6 border-b">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg lg:text-xl font-semibold text-gray-900">Mis Cursos</h2>
-              <button
-                onClick={() => onSectionChange?.('courses')}
-                className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1"
-              >
-                <Eye className="w-4 h-4" />
-                Ver todos
-              </button>
-            </div>
-          </div>
-          
-          <div className="p-4 lg:p-6">
-            {courses.length > 0 ? (
-              <div className="space-y-4">
-                {courses.slice(0, 3).map(course => (
-                  <div key={course.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-medium text-gray-900">{course.title}</h3>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        course.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {course.status === 'published' ? 'Publicado' : 'Borrador'}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                      <div className="flex items-center gap-1">
-                        <Users className="w-4 h-4" />
-                        <span>{course.studentsEnrolled} estudiantes</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4" />
-                        <span>{course.rating.toFixed(1)}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        <span>{course.duration}h</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        course.difficulty === 'Principiante' ? 'bg-green-100 text-green-800' :
-                        course.difficulty === 'Intermedio' ? 'bg-yellow-100 text-yellow-800' : 
-                        'bg-red-100 text-red-800'
-                      }`}>
-                        {course.difficulty}
-                      </span>
-                      <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                        Gestionar →
-                      </button>
-                    </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {/* Total Courses */}
+          <div className="bg-white overflow-hidden shadow-lg rounded-xl border border-gray-200">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-500 bg-opacity-10 rounded-xl flex items-center justify-center">
+                    <BookOpen className="w-6 h-6 text-blue-600" />
                   </div>
-                ))}
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Cursos Creados</h3>
+                  <p className="text-3xl font-bold text-blue-600">{totalCourses}</p>
+                </div>
               </div>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p className="mb-2">No tienes cursos creados</p>
-                <button
+            </div>
+          </div>
+
+          {/* Total Students */}
+          <div className="bg-white overflow-hidden shadow-lg rounded-xl border border-gray-200">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-green-500 bg-opacity-10 rounded-xl flex items-center justify-center">
+                    <Users className="w-6 h-6 text-green-600" />
+                  </div>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Estudiantes</h3>
+                  <p className="text-3xl font-bold text-green-600">{totalStudents}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Average Rating */}
+          <div className="bg-white overflow-hidden shadow-lg rounded-xl border border-gray-200">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-yellow-500 bg-opacity-10 rounded-xl flex items-center justify-center">
+                    <Star className="w-6 h-6 text-yellow-600" />
+                  </div>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Rating Promedio</h3>
+                  <p className="text-3xl font-bold text-yellow-600">{avgRating}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Total Enrollments */}
+          <div className="bg-white overflow-hidden shadow-lg rounded-xl border border-gray-200">
+            <div className="p-6">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-purple-500 bg-opacity-10 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-purple-600" />
+                  </div>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Inscripciones</h3>
+                  <p className="text-3xl font-bold text-purple-600">{totalEnrollments}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* My Courses */}
+          <div className="bg-white shadow-lg rounded-xl border border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-gray-900">Mis Cursos</h2>
+                <button 
                   onClick={() => onSectionChange?.('create-course')}
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center"
                 >
-                  Crear tu primer curso →
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nuevo Curso
                 </button>
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="bg-white rounded-xl shadow-sm border">
-          <div className="p-4 lg:p-6 border-b">
-            <h2 className="text-lg lg:text-xl font-semibold text-gray-900">Actividad Reciente</h2>
-          </div>
-          
-          <div className="p-4 lg:p-6">
-            {recentEnrollments.length > 0 ? (
-              <div className="space-y-4">
-                {recentEnrollments.map((enrollment, index) => {
-                  const course = courses.find(c => c.id === enrollment.courseId);
-                  const student = students.find(s => s.id === enrollment.userId);
-                  
-                  if (!course || !student) return null;
-                  
-                  return (
-                    <div key={enrollment.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <Users className="w-5 h-5 text-blue-600" />
+            </div>
+            <div className="p-6">
+              {courses.length > 0 ? (
+                <div className="space-y-4">
+                  {courses.slice(0, 3).map((course) => (
+                    <div key={course.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-900 mb-1">{course.title}</h3>
+                          <p className="text-gray-600 text-sm mb-2 line-clamp-2">{course.description}</p>
+                          <div className="flex items-center space-x-4 text-sm text-gray-500">
+                            <span className="flex items-center">
+                              <Users className="w-4 h-4 mr-1" />
+                              {course.studentsEnrolled} estudiantes
+                            </span>
+                            <span className="flex items-center">
+                              <Star className="w-4 h-4 mr-1 text-yellow-500" />
+                              {course.rating}
+                            </span>
+                            <span className="flex items-center">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {course.duration}h
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex space-x-2 ml-4">
+                          <button 
+                            onClick={() => onSectionChange?.('courses')}
+                            className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                            title="Ver detalles"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                          <button 
+                            className="p-2 text-gray-400 hover:text-green-600 transition-colors"
+                            title="Editar curso"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900">
-                          {student.name} se inscribió en {course.title}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {new Date(enrollment.enrolledAt).toLocaleDateString('es-ES', {
-                            day: 'numeric',
-                            month: 'short',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </p>
-                      </div>
-                      <CheckCircle className="w-5 h-5 text-green-500" />
                     </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <BarChart3 className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                <p>No hay actividad reciente</p>
-              </div>
-            )}
+                  ))}
+                  {courses.length > 3 && (
+                    <button 
+                      onClick={() => onSectionChange?.('courses')}
+                      className="w-full text-center py-3 text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                    >
+                      Ver todos los cursos ({courses.length})
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No tienes cursos aún</h3>
+                  <p className="text-gray-500 mb-4">Crea tu primer curso para comenzar a enseñar</p>
+                  <button 
+                    onClick={() => onSectionChange?.('create-course')}
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  >
+                    Crear mi primer curso
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Recent Student Activity */}
+          <div className="bg-white shadow-lg rounded-xl border border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">Actividad Reciente</h2>
+            </div>
+            <div className="p-6">
+              {students.length > 0 ? (
+                <div className="space-y-4">
+                  {students.slice(0, 5).map((student) => (
+                    <div key={student.id} className="flex items-center space-x-3">
+                      <img 
+                        src={student.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=3B82F6&color=fff`}
+                        alt={student.name}
+                        className="w-10 h-10 rounded-full"
+                      />
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900">{student.name}</h4>
+                        <p className="text-sm text-gray-500">
+                          {student.stats?.completedLevels || 0} niveles completados
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-green-600">
+                          +{student.stats?.totalXP || 0} XP
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                  <button 
+                    onClick={() => onSectionChange?.('students')}
+                    className="w-full text-center py-3 text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                  >
+                    Ver todos los estudiantes
+                  </button>
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Sin actividad reciente</h3>
+                  <p className="text-gray-500">La actividad de los estudiantes aparecerá aquí</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Performance Overview */}
-      <div className="bg-white rounded-xl shadow-sm border">
-        <div className="p-4 lg:p-6 border-b">
-          <h2 className="text-lg lg:text-xl font-semibold text-gray-900">Resumen de Rendimiento</h2>
-        </div>
-        
-        <div className="p-4 lg:p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <TrendingUp className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Crecimiento</h3>
-              <p className="text-2xl font-bold text-blue-600 mb-1">+{totalEnrollments}</p>
-              <p className="text-sm text-gray-600">Nuevas inscripciones</p>
+        {/* Quick Actions */}
+        <div className="mt-8">
+          <div className="bg-white shadow-lg rounded-xl border border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">Acciones Rápidas</h2>
             </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Award className="w-8 h-8 text-green-600" />
+            <div className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button 
+                  onClick={() => onSectionChange?.('create-course')}
+                  className="flex items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors group"
+                >
+                  <Plus className="w-6 h-6 text-blue-600 mr-3 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium text-blue-900">Crear Nuevo Curso</span>
+                </button>
+                
+                <button 
+                  onClick={() => onSectionChange?.('courses')}
+                  className="flex items-center justify-center p-4 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg transition-colors group"
+                >
+                  <BookOpen className="w-6 h-6 text-green-600 mr-3 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium text-green-900">Gestionar Cursos</span>
+                </button>
+                
+                <button 
+                  onClick={() => onSectionChange?.('students')}
+                  className="flex items-center justify-center p-4 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg transition-colors group"
+                >
+                  <Users className="w-6 h-6 text-purple-600 mr-3 group-hover:scale-110 transition-transform" />
+                  <span className="font-medium text-purple-900">Ver Estudiantes</span>
+                </button>
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Calidad</h3>
-              <p className="text-2xl font-bold text-green-600 mb-1">{averageRating.toFixed(1)}/5</p>
-              <p className="text-sm text-gray-600">Calificación promedio</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Users className="w-8 h-8 text-purple-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Alcance</h3>
-              <p className="text-2xl font-bold text-purple-600 mb-1">{totalStudents}</p>
-              <p className="text-sm text-gray-600">Estudiantes activos</p>
             </div>
           </div>
         </div>

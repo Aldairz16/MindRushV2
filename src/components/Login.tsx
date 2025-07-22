@@ -121,6 +121,16 @@ export const Login: React.FC = () => {
                 </button>
               ))}
             </div>
+            
+            {/* Diagnostic Link */}
+            <div className="mt-4 pt-4 border-t border-white/20">
+              <a 
+                href="#diagnostic" 
+                className="block w-full text-center text-white/70 text-xs hover:text-white transition-colors"
+              >
+                🔧 Diagnóstico del Sistema
+              </a>
+            </div>
           </div>
         </div>
       </div>

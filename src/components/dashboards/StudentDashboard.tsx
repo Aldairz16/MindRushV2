@@ -15,6 +15,7 @@ import {
 import { CourseExplorer } from '../student/CourseExplorer';
 import { StudentProgress } from '../student/StudentProgress';
 import { apiService, Course, User } from '../../services/api';
+import { demoCourses } from '../../data/demoCourses';
 
 interface StudentDashboardProps {
   user: User;
@@ -51,14 +52,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ user, active
     } catch (err) {
       console.error('Error loading dashboard data:', err);
       setServerStatus('offline');
-      setError('No se pudieron cargar los datos. Trabajando en modo offline.');
+      setError('No se pudieron cargar los datos. Mostrando datos de demostración.');
       
-      // Load from localStorage as fallback
-      const savedCourses = localStorage.getItem('courses');
-      if (savedCourses) {
-        const courses = JSON.parse(savedCourses);
-        setEnrolledCourses(courses.filter((course: Course) => course.status === 'published'));
-      }
+      // Use demo data as fallback
+      console.log('Using demo courses as fallback');
+      const publishedDemoCourses = demoCourses.filter(course => course.status === 'published');
+      setEnrolledCourses(publishedDemoCourses);
     } finally {
       setLoading(false);
     }

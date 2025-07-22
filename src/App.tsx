@@ -4,11 +4,17 @@ import { NotificationProvider } from './contexts/NotificationContext';
 import { Login } from './components/Login';
 import { Dashboard } from './components/Dashboard';
 import { Navigation } from './components/Navigation';
+import { SystemDiagnostic } from './components/SystemDiagnostic';
 
 const AppContent: React.FC = () => {
   const { user, logout } = useAuth();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Check if we're on diagnostic route
+  if (window.location.hash === '#diagnostic') {
+    return <SystemDiagnostic />;
+  }
 
   if (isLoading) {
     return (
