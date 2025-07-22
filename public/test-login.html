@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Login API</title>
+</head>
+<body>
+    <h1>Test Login API</h1>
+    <div>
+        <input type="email" id="email" placeholder="Email" value="student@mindrush.com">
+        <input type="password" id="password" placeholder="Password" value="password">
+        <button onclick="testLogin()">Test Login</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        async function testLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                console.log('Testing login with:', email, password);
+                const response = await fetch(`http://localhost:3001/users?email=${email}&password=${password}`);
+                console.log('Response status:', response.status);
+                const users = await response.json();
+                console.log('Users found:', users);
+                
+                if (users.length > 0) {
+                    resultDiv.innerHTML = `<p style="color: green">Login successful!</p><pre>${JSON.stringify(users[0], null, 2)}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red">Login failed - no user found</p>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `<p style="color: red">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

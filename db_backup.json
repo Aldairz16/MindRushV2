@@ -1,0 +1,564 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "student@mindrush.com",
+      "password": "password",
+      "role": "student",
+      "name": "Ana García",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150",
+      "bio": "Estudiante de Ingeniería en Sistemas, apasionada por el desarrollo web y la inteligencia artificial.",
+      "location": "Madrid, España",
+      "joinedAt": "2024-09-15T08:00:00Z",
+      "stats": {
+        "completedLevels": 12,
+        "currentLevel": 13,
+        "totalXP": 2450,
+        "unlockedLevels": 15,
+        "coursesEnrolled": 8,
+        "coursesCompleted": 3,
+        "averageScore": 88,
+        "studyStreak": 15,
+        "totalStudyHours": 67,
+        "certificatesEarned": 2
+      },
+      "progress": {
+        "js-advanced-2024": {
+          "completedModules": ["mod-1", "mod-2", "mod-3", "mod-4"],
+          "currentModule": "mod-5",
+          "progress": 80,
+          "xp": 320,
+          "lastActivity": "2025-01-22T10:30:00Z",
+          "timeSpent": 12,
+          "quizScores": [95, 87, 92, 85]
+        },
+        "react-fundamentals-2024": {
+          "completedModules": ["mod-react-1", "mod-react-2", "mod-react-3"],
+          "currentModule": "mod-react-4",
+          "progress": 75,
+          "xp": 280,
+          "lastActivity": "2025-01-21T15:45:00Z",
+          "timeSpent": 18,
+          "quizScores": [90, 88, 94]
+        },
+        "python-data-science-2024": {
+          "completedModules": ["mod-py-1", "mod-py-2"],
+          "currentModule": "mod-py-3",
+          "progress": 40,
+          "xp": 180,
+          "lastActivity": "2025-01-20T09:15:00Z",
+          "timeSpent": 15,
+          "quizScores": [85, 89]
+        }
+      },
+      "enrolledCourses": ["js-advanced-2024", "react-fundamentals-2024", "python-data-science-2024", "node-backend-2024", "database-design-2024"],
+      "completedCourses": ["html-css-basics", "git-version-control", "responsive-design"],
+      "achievements": [
+        {
+          "id": "first-course",
+          "name": "Primer Paso",
+          "description": "Completar tu primer curso",
+          "earnedAt": "2024-10-15T14:00:00Z",
+          "icon": "🎯"
+        },
+        {
+          "id": "study-streak-7",
+          "name": "Semana Perfecta",
+          "description": "Estudiar 7 días consecutivos",
+          "earnedAt": "2024-11-20T18:00:00Z",
+          "icon": "🔥"
+        },
+        {
+          "id": "quiz-master",
+          "name": "Maestro de Trivias",
+          "description": "Obtener 90+ en 10 trivias",
+          "earnedAt": "2025-01-10T12:00:00Z",
+          "icon": "🧠"
+        }
+      ],
+      "preferences": {
+        "theme": "light",
+        "notifications": true,
+        "language": "es",
+        "studyReminders": true,
+        "weeklyGoal": 10
+      }
+    },
+    {
+      "id": 2,
+      "email": "teacher@mindrush.com", 
+      "password": "password",
+      "role": "teacher",
+      "name": "Dr. Carlos Mendoza",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
+      "bio": "PhD en Ciencias de la Computación con 10+ años de experiencia en desarrollo web y educación tecnológica.",
+      "location": "Barcelona, España",
+      "joinedAt": "2023-03-01T08:00:00Z",
+      "specialties": ["JavaScript", "React", "Node.js", "Arquitectura de Software"],
+      "stats": {
+        "coursesCreated": 8,
+        "totalStudents": 1247,
+        "averageRating": 4.8,
+        "totalLessons": 96,
+        "totalHoursContent": 180,
+        "completionRate": 78,
+        "studentSatisfaction": 95
+      },
+      "courses": ["js-advanced-2024", "react-fundamentals-2024", "node-backend-2024", "fullstack-project", "microservices-architecture"],
+      "achievements": [
+        {
+          "id": "popular-instructor",
+          "name": "Instructor Popular",
+          "description": "Más de 1000 estudiantes",
+          "earnedAt": "2024-06-15T10:00:00Z",
+          "icon": "⭐"
+        },
+        {
+          "id": "top-rated",
+          "name": "Excelencia Educativa",
+          "description": "Rating promedio 4.8+",
+          "earnedAt": "2024-08-22T16:00:00Z", 
+          "icon": "🏆"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "email": "admin@mindrush.com",
+      "password": "password", 
+      "role": "admin",
+      "name": "María Rodríguez",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+      "bio": "Administradora de la plataforma, especialista en gestión educativa y experiencia de usuario.",
+      "location": "Valencia, España",
+      "joinedAt": "2023-01-01T08:00:00Z"
+    },
+    {
+      "id": 4,
+      "email": "luis.morales@email.com",
+      "password": "password",
+      "role": "student", 
+      "name": "Luis Morales",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "bio": "Desarrollador junior buscando especializarse en tecnologías modernas de frontend.",
+      "location": "México DF, México",
+      "joinedAt": "2024-11-10T08:00:00Z",
+      "stats": {
+        "completedLevels": 8,
+        "currentLevel": 9,
+        "totalXP": 1680,
+        "unlockedLevels": 10,
+        "coursesEnrolled": 5,
+        "coursesCompleted": 2,
+        "averageScore": 82,
+        "studyStreak": 8,
+        "totalStudyHours": 45,
+        "certificatesEarned": 1
+      },
+      "enrolledCourses": ["react-fundamentals-2024", "js-advanced-2024", "css-advanced", "git-workflow", "testing-fundamentals"],
+      "completedCourses": ["html-css-basics", "javascript-basics"]
+    },
+    {
+      "id": 5,
+      "email": "carmen.vega@email.com", 
+      "password": "password",
+      "role": "student",
+      "name": "Carmen Vega",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150",
+      "bio": "Diseñadora UX/UI transitioning hacia el desarrollo frontend para crear experiencias completas.",
+      "location": "Sevilla, España", 
+      "joinedAt": "2024-12-05T08:00:00Z",
+      "stats": {
+        "completedLevels": 6,
+        "currentLevel": 7,
+        "totalXP": 1120,
+        "unlockedLevels": 8,
+        "coursesEnrolled": 4,
+        "coursesCompleted": 1,
+        "averageScore": 91,
+        "studyStreak": 12,
+        "totalStudyHours": 32,
+        "certificatesEarned": 1
+      },
+      "enrolledCourses": ["react-fundamentals-2024", "css-advanced", "design-systems", "accessibility-web"],
+      "completedCourses": ["html-css-basics"]
+    },
+    {
+      "id": 6,
+      "email": "alejandro.santos@email.com",
+      "password": "password", 
+      "role": "student",
+      "name": "Alejandro Santos",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+      "bio": "Estudiante de último año de Ingeniería Informática, interesado en desarrollo backend y DevOps.",
+      "location": "Buenos Aires, Argentina",
+      "joinedAt": "2024-10-20T08:00:00Z",
+      "stats": {
+        "completedLevels": 10,
+        "currentLevel": 11,
+        "totalXP": 1950,
+        "unlockedLevels": 12,
+        "coursesEnrolled": 6,
+        "coursesCompleted": 2,
+        "averageScore": 86,
+        "studyStreak": 5,
+        "totalStudyHours": 58,
+        "certificatesEarned": 2
+      },
+      "enrolledCourses": ["python-data-science-2024", "node-backend-2024", "database-design-2024", "docker-kubernetes", "linux-server", "api-design"],
+      "completedCourses": ["programming-fundamentals", "git-version-control"]
+    },
+    {
+      "id": 7,
+      "email": "sofia.martinez@email.com",
+      "password": "password",
+      "role": "teacher",
+      "name": "Dra. Sofía Martínez", 
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150",
+      "bio": "Especialista en Data Science y Machine Learning con 8 años de experiencia en la industria.",
+      "location": "Colombia, Bogotá",
+      "joinedAt": "2023-08-15T08:00:00Z",
+      "specialties": ["Python", "Data Science", "Machine Learning", "Estadística"],
+      "stats": {
+        "coursesCreated": 5,
+        "totalStudents": 876,
+        "averageRating": 4.9,
+        "totalLessons": 67,
+        "totalHoursContent": 120,
+        "completionRate": 82,
+        "studentSatisfaction": 97
+      },
+      "courses": ["python-data-science-2024", "machine-learning-intro", "statistics-data", "data-visualization", "ai-fundamentals"]
+    },
+    {
+      "id": 8,
+      "email": "roberto.jimenez@email.com",
+      "password": "password",
+      "role": "teacher",
+      "name": "Prof. Roberto Jiménez",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "bio": "Arquitecto de Software Senior con expertise en sistemas distribuidos y arquitecturas cloud.",
+      "location": "Chile, Santiago",
+      "joinedAt": "2023-06-10T08:00:00Z",
+      "specialties": ["Arquitectura de Software", "Microservicios", "Cloud Computing", "DevOps"],
+      "stats": {
+        "coursesCreated": 6,
+        "totalStudents": 654,
+        "averageRating": 4.7,
+        "totalLessons": 78,
+        "totalHoursContent": 145,
+        "completionRate": 75,
+        "studentSatisfaction": 93
+      },
+      "courses": ["microservices-architecture", "cloud-fundamentals", "docker-kubernetes", "system-design", "scalable-apps", "monitoring-logging"]
+    }
+  ],
+      "email": "admin@mindrush.com",
+      "password": "password",
+      "role": "admin",
+      "name": "María Rodriguez",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+      "stats": {
+        "totalUsers": 1250,
+        "totalCourses": 45,
+        "activeStudents": 892,
+        "platformRating": 4.7
+      }
+    },
+    {
+      "id": 4,
+      "email": "student2@mindrush.com",
+      "password": "password",
+      "role": "student",
+      "name": "Luis Morales",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "stats": {
+        "completedLevels": 5,
+        "currentLevel": 6,
+        "totalXP": 450,
+        "unlockedLevels": 7,
+        "coursesEnrolled": 2,
+        "averageScore": 92
+      },
+      "progress": {
+        "js-advanced-2024": {
+          "completedModules": ["mod-1", "mod-2", "mod-3", "mod-4"],
+          "currentModule": "completed",
+          "xp": 300,
+          "lastActivity": "2025-01-21T14:15:00Z"
+        },
+        "react-fundamentals-2024": {
+          "completedModules": ["mod-react-1"],
+          "currentModule": "mod-react-2",
+          "xp": 80,
+          "lastActivity": "2025-01-21T09:20:00Z"
+        }
+      },
+      "enrolledCourses": ["js-advanced-2024", "react-fundamentals-2024"]
+    },
+    {
+      "id": 5,
+      "email": "student3@mindrush.com",
+      "password": "password",
+      "role": "student",
+      "name": "Carmen Vega",
+      "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150",
+      "stats": {
+        "completedLevels": 1,
+        "currentLevel": 2,
+        "totalXP": 80,
+        "unlockedLevels": 2,
+        "coursesEnrolled": 1,
+        "averageScore": 78
+      },
+      "progress": {
+        "python-data-science-2024": {
+          "completedModules": ["mod-python-1"],
+          "currentModule": "mod-python-2",
+          "xp": 80,
+          "lastActivity": "2025-01-21T11:45:00Z"
+        }
+      },
+      "enrolledCourses": ["python-data-science-2024"]
+    }
+  ],
+  "enrollments": [
+    {
+      "id": 1,
+      "userId": 1,
+      "courseId": "js-advanced-2024",
+      "enrolledAt": "2025-01-16T09:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "courseId": "react-fundamentals-2024",
+      "enrolledAt": "2025-01-17T10:30:00Z",
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "courseId": "python-data-science-2024",
+      "enrolledAt": "2025-01-18T14:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "courseId": "js-advanced-2024",
+      "enrolledAt": "2025-01-15T08:00:00Z",
+      "status": "completed"
+    },
+    {
+      "id": 5,
+      "userId": 4,
+      "courseId": "react-fundamentals-2024",
+      "enrolledAt": "2025-01-19T13:15:00Z",
+      "status": "active"
+    },
+    {
+      "id": 6,
+      "userId": 5,
+      "courseId": "python-data-science-2024",
+      "enrolledAt": "2025-01-20T16:45:00Z",
+      "status": "active"
+    }
+  ],
+  "courses": [
+    {
+      "id": "js-advanced-2024",
+      "title": "JavaScript Avanzado 2024",
+      "description": "Domina conceptos avanzados de JavaScript incluyendo closures, prototypes, async/await y más.",
+      "instructor": "Dr. Carlos Mendoza",
+      "instructorId": "2",
+      "category": "Programación",
+      "difficulty": "Avanzado",
+      "duration": 40,
+      "rating": 4.8,
+      "studentsEnrolled": 156,
+      "thumbnail": "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400",
+      "tags": ["JavaScript", "ES6+", "Async", "DOM"],
+      "objectives": [
+        "Dominar conceptos avanzados de JavaScript",
+        "Implementar patrones de diseño",
+        "Trabajar con APIs y promesas",
+        "Optimizar el rendimiento del código"
+      ],
+      "prerequisites": ["HTML básico", "CSS básico", "JavaScript básico"],
+      "modules": [
+        {
+          "id": "mod-1",
+          "title": "Closures y Scope",
+          "description": "Comprende el funcionamiento interno de closures y scope",
+          "type": "theory",
+          "duration": 45,
+          "order": 1,
+          "content": [
+            {
+              "type": "theory",
+              "title": "¿Qué son los Closures?",
+              "content": "Los closures son una característica fundamental de JavaScript que permite a las funciones acceder a variables de su ámbito léxico..."
+            }
+          ]
+        },
+        {
+          "id": "mod-2",
+          "title": "Trivia: Closures",
+          "description": "Pon a prueba tus conocimientos sobre closures",
+          "type": "trivia",
+          "duration": 15,
+          "order": 2,
+          "content": [
+            {
+              "type": "trivia",
+              "question": "¿Qué es un closure en JavaScript?",
+              "options": [
+                "Una función que tiene acceso a variables de su ámbito léxico",
+                "Una función anónima",
+                "Un método de un objeto",
+                "Una función recursiva"
+              ],
+              "correctAnswer": 0,
+              "explanation": "Un closure es una función que tiene acceso a variables de su ámbito léxico, incluso después de que la función externa haya terminado de ejecutarse."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-20T15:30:00Z",
+      "status": "published",
+      "completionRate": 85,
+      "certificateEnabled": true
+    },
+    {
+      "id": "react-fundamentals-2024",
+      "title": "React Fundamentos 2024",
+      "description": "Aprende React desde cero con los conceptos más actuales y las mejores prácticas.",
+      "instructor": "Prof. Ana Martínez",
+      "instructorId": "2",
+      "category": "Frontend",
+      "difficulty": "Intermedio",
+      "duration": 35,
+      "rating": 4.9,
+      "studentsEnrolled": 203,
+      "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400",
+      "tags": ["React", "JSX", "Components", "Hooks"],
+      "objectives": [
+        "Crear componentes React reutilizables",
+        "Manejar estado con hooks",
+        "Implementar routing",
+        "Conectar con APIs"
+      ],
+      "prerequisites": ["HTML", "CSS", "JavaScript básico"],
+      "modules": [
+        {
+          "id": "mod-react-1",
+          "title": "Introducción a React",
+          "description": "Conceptos básicos de React y JSX",
+          "type": "theory",
+          "duration": 60,
+          "order": 1,
+          "content": [
+            {
+              "type": "theory",
+              "title": "¿Qué es React?",
+              "content": "React es una biblioteca de JavaScript para construir interfaces de usuario..."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-01-10T09:00:00Z",
+      "updatedAt": "2024-01-18T14:20:00Z",
+      "status": "published",
+      "completionRate": 92,
+      "certificateEnabled": true
+    },
+    {
+      "id": "python-data-science-2024",
+      "title": "Python para Data Science",
+      "description": "Aprende análisis de datos y machine learning con Python, pandas y scikit-learn.",
+      "instructor": "Dr. Carlos Mendoza",
+      "instructorId": "2",
+      "category": "Data Science",
+      "difficulty": "Intermedio",
+      "duration": 50,
+      "rating": 4.7,
+      "studentsEnrolled": 98,
+      "thumbnail": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400",
+      "tags": ["Python", "Pandas", "NumPy", "Machine Learning"],
+      "objectives": [
+        "Manipular datos con pandas",
+        "Crear visualizaciones",
+        "Implementar modelos de ML",
+        "Análisis estadístico"
+      ],
+      "prerequisites": ["Python básico", "Matemáticas básicas"],
+      "modules": [
+        {
+          "id": "mod-py-1",
+          "title": "Introducción a NumPy",
+          "description": "Fundamentos de NumPy para análisis numérico",
+          "type": "theory",
+          "duration": 45,
+          "order": 1,
+          "content": [
+            {
+              "type": "theory",
+              "title": "Arrays en NumPy",
+              "content": "NumPy proporciona estructuras de datos eficientes para computación numérica..."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-01-05T11:00:00Z",
+      "updatedAt": "2024-01-22T16:45:00Z",
+      "status": "published",
+      "completionRate": 78,
+      "certificateEnabled": true
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "userId": 1,
+      "courseId": "js-advanced-2024",
+      "moduleId": "mod-2",
+      "type": "quiz_completed",
+      "score": 85,
+      "xpEarned": 60,
+      "timestamp": "2025-01-21T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 4,
+      "courseId": "js-advanced-2024",
+      "moduleId": "mod-4",
+      "type": "course_completed",
+      "score": 94,
+      "xpEarned": 100,
+      "timestamp": "2025-01-21T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 5,
+      "courseId": "python-data-science-2024",
+      "moduleId": "mod-python-1",
+      "type": "module_completed",
+      "score": 78,
+      "xpEarned": 40,
+      "timestamp": "2025-01-21T11:45:00Z"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "courseId": "react-fundamentals-2024",
+      "moduleId": "mod-react-1",
+      "type": "theory_completed",
+      "score": 88,
+      "xpEarned": 30,
+      "timestamp": "2025-01-20T15:45:00Z"
+    }
+  ]
+}

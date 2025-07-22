@@ -1,0 +1,590 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "student@mindrush.com",
+      "password": "password",
+      "role": "student",
+      "name": "Ana García",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150",
+      "bio": "Estudiante de Ingeniería en Sistemas, apasionada por el desarrollo web y la inteligencia artificial.",
+      "location": "Madrid, España",
+      "joinedAt": "2024-09-15T08:00:00Z",
+      "stats": {
+        "completedLevels": 12,
+        "currentLevel": 13,
+        "totalXP": 2450,
+        "unlockedLevels": 15,
+        "coursesEnrolled": 8,
+        "coursesCompleted": 3,
+        "averageScore": 88,
+        "studyStreak": 15,
+        "totalStudyHours": 67,
+        "certificatesEarned": 2
+      },
+      "progress": {
+        "js-advanced-2024": {
+          "completedModules": ["mod-1", "mod-2", "mod-3", "mod-4"],
+          "currentModule": "mod-5",
+          "progress": 80,
+          "xp": 320,
+          "lastActivity": "2025-01-22T10:30:00Z",
+          "timeSpent": 12,
+          "quizScores": [95, 87, 92, 85]
+        },
+        "react-fundamentals-2024": {
+          "completedModules": ["mod-react-1", "mod-react-2", "mod-react-3"],
+          "currentModule": "mod-react-4",
+          "progress": 75,
+          "xp": 280,
+          "lastActivity": "2025-01-21T15:45:00Z",
+          "timeSpent": 18,
+          "quizScores": [90, 88, 94]
+        }
+      },
+      "enrolledCourses": ["js-advanced-2024", "react-fundamentals-2024", "python-data-science-2024"],
+      "completedCourses": ["html-css-basics", "javascript-basics"]
+    },
+    {
+      "id": 2,
+      "email": "teacher@mindrush.com",
+      "password": "password",
+      "role": "teacher",
+      "name": "Dr. Carlos Mendoza",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "bio": "Profesor de Ciencias de la Computación con 15 años de experiencia en desarrollo web y educación tecnológica.",
+      "location": "Barcelona, España",
+      "joinedAt": "2023-01-10T08:00:00Z",
+      "stats": {
+        "coursesCreated": 12,
+        "studentsEnrolled": 1847,
+        "averageRating": 4.8,
+        "totalHoursTeaching": 2340,
+        "certificatesIssued": 892,
+        "activeStudents": 567
+      },
+      "specialties": ["JavaScript", "React", "Node.js", "Bases de Datos", "Arquitectura Web"],
+      "teachingExperience": "15 años"
+    },
+    {
+      "id": 3,
+      "email": "admin@mindrush.com",
+      "password": "password",
+      "role": "admin",
+      "name": "María López",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+      "bio": "Administradora de la plataforma MindRush, especializada en gestión educativa y análisis de datos.",
+      "location": "Valencia, España",
+      "joinedAt": "2023-01-01T08:00:00Z"
+    },
+    {
+      "id": 4,
+      "email": "luis.martinez@email.com",
+      "password": "password",
+      "role": "student",
+      "name": "Luis Martínez",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
+      "bio": "Desarrollador junior buscando especializarse en tecnologías modernas de frontend.",
+      "location": "México DF, México",
+      "joinedAt": "2024-11-10T08:00:00Z",
+      "stats": {
+        "completedLevels": 8,
+        "currentLevel": 9,
+        "totalXP": 1680,
+        "unlockedLevels": 10,
+        "coursesEnrolled": 3,
+        "coursesCompleted": 2,
+        "averageScore": 82,
+        "studyStreak": 8,
+        "totalStudyHours": 45,
+        "certificatesEarned": 1
+      },
+      "enrolledCourses": ["react-fundamentals-2024", "js-advanced-2024", "node-backend-2024"],
+      "completedCourses": ["html-css-basics", "javascript-basics"]
+    },
+    {
+      "id": 5,
+      "email": "teacher2@mindrush.com",
+      "password": "password",
+      "role": "teacher",
+      "name": "Prof. Elena Rodriguez",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150",
+      "bio": "Especialista en Ciencia de Datos y Python, con experiencia en machine learning y análisis estadístico.",
+      "location": "Buenos Aires, Argentina",
+      "joinedAt": "2023-06-15T08:00:00Z",
+      "stats": {
+        "coursesCreated": 8,
+        "studentsEnrolled": 923,
+        "averageRating": 4.9,
+        "totalHoursTeaching": 1560,
+        "certificatesIssued": 445,
+        "activeStudents": 298
+      },
+      "specialties": ["Python", "Data Science", "Machine Learning", "Statistics", "NumPy", "Pandas"],
+      "teachingExperience": "12 años"
+    }
+  ],
+  "courses": [
+    {
+      "id": "js-advanced-2024",
+      "title": "JavaScript Avanzado 2024",
+      "description": "Domina las características avanzadas de JavaScript incluyendo ES6+, programación asíncrona y patrones de diseño.",
+      "instructor": "Dr. Carlos Mendoza",
+      "instructorId": "2",
+      "category": "frontend",
+      "difficulty": "Avanzado",
+      "duration": 40,
+      "rating": 4.8,
+      "studentsEnrolled": 1247,
+      "thumbnail": "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=800",
+      "tags": ["javascript", "es6", "async", "advanced"],
+      "objectives": [
+        "Dominar características avanzadas de ES6+",
+        "Implementar programación asíncrona eficiente",
+        "Aplicar patrones de diseño en JavaScript",
+        "Optimizar el rendimiento del código"
+      ],
+      "prerequisites": ["JavaScript básico", "HTML y CSS", "Programación orientada a objetos"],
+      "modules": [
+        {
+          "id": "mod-1",
+          "title": "ES6+ y Nuevas Características",
+          "description": "Explora las últimas características de JavaScript",
+          "type": "lesson",
+          "duration": 60,
+          "order": 1,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "content-1",
+              "type": "text",
+              "title": "Arrow Functions y Lexical Scope",
+              "content": "Las arrow functions introducidas en ES6 proporcionan una sintaxis más concisa para escribir funciones y tienen un comportamiento especial con el contexto 'this'. A diferencia de las funciones tradicionales, las arrow functions no tienen su propio 'this', sino que heredan el contexto del ámbito en el que fueron definidas.\n\nEsto es especialmente útil cuando trabajamos con callbacks, event handlers y métodos de array como map, filter y reduce. La sintaxis es más limpia y evita problemas comunes relacionados con el binding del contexto.",
+              "duration": 15
+            },
+            {
+              "id": "content-2",
+              "type": "video",
+              "title": "Destructuring Assignment en Profundidad",
+              "content": "https://example.com/video1",
+              "duration": 20
+            },
+            {
+              "id": "content-3",
+              "type": "interactive",
+              "title": "Template Literals y Tagged Templates",
+              "content": "Práctica con template literals, expresiones embebidas y tagged templates para manipulación avanzada de strings",
+              "duration": 25
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "q1",
+              "question": "¿Cuál es la principal diferencia entre arrow functions y funciones tradicionales respecto al contexto 'this'?",
+              "type": "multiple-choice",
+              "options": [
+                "Las arrow functions tienen su propio 'this'",
+                "Las arrow functions heredan el 'this' del ámbito padre",
+                "No hay diferencia",
+                "Las arrow functions no pueden usar 'this'"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Las arrow functions no tienen su propio 'this', sino que heredan el contexto del ámbito en el que fueron definidas",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "medium",
+              "category": "ES6"
+            },
+            {
+              "id": "q2",
+              "question": "¿Qué permite hacer destructuring assignment?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "extraer valores de arrays u objetos",
+              "explanation": "Destructuring permite desempaquetar valores de arrays/objetos en variables distintas",
+              "timeLimit": 45,
+              "points": 20,
+              "difficulty": "medium",
+              "category": "ES6"
+            },
+            {
+              "id": "q3",
+              "question": "¿Cuáles de las siguientes son características de ES6+?",
+              "type": "multiple-select",
+              "options": [
+                "Arrow functions",
+                "let y const",
+                "Template literals",
+                "Destructuring",
+                "var hoisting",
+                "Classes"
+              ],
+              "correctAnswer": 0,
+              "correctAnswers": [0, 1, 2, 3, 5],
+              "explanation": "Todas excepto 'var hoisting' son características introducidas en ES6+",
+              "timeLimit": 40,
+              "points": 25,
+              "difficulty": "hard",
+              "category": "ES6"
+            }
+          ]
+        },
+        {
+          "id": "mod-2",
+          "title": "Programación Asíncrona Avanzada",
+          "description": "Domina promises, async/await y patrones asíncronos avanzados",
+          "type": "lesson",
+          "duration": 75,
+          "order": 2,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "content-4",
+              "type": "text",
+              "title": "Promises y Promise Chaining",
+              "content": "Las Promises son objetos que representan la eventual completación o falla de una operación asíncrona. Proporcionan una manera más elegante de manejar operaciones asíncronas comparado con callbacks, evitando el 'callback hell'.\n\nUna Promise puede estar en uno de tres estados: pending (pendiente), fulfilled (cumplida) o rejected (rechazada). Una vez que una Promise cambia de estado, permanece en ese estado y no puede cambiar nuevamente.\n\nEl Promise chaining permite encadenar múltiples operaciones asíncronas de manera secuencial usando .then(), .catch() y .finally().",
+              "duration": 25
+            },
+            {
+              "id": "content-5",
+              "type": "video", 
+              "title": "Async/Await: Sintaxis Síncrona para Código Asíncrono",
+              "content": "https://example.com/video2",
+              "duration": 30
+            },
+            {
+              "id": "content-6",
+              "type": "interactive",
+              "title": "Manejo de Errores y Promise.all",
+              "content": "Ejercicios prácticos con try/catch, Promise.all, Promise.race y manejo de errores en operaciones asíncronas",
+              "duration": 20
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "q4",
+              "question": "¿Cuál es la ventaja principal de async/await sobre promises tradicionales?",
+              "type": "multiple-choice",
+              "options": [
+                "Mejor performance",
+                "Código más legible y mantenible",
+                "Menos uso de memoria",
+                "Ejecución más rápida"
+              ],
+              "correctAnswer": 1,
+              "explanation": "async/await hace que el código asíncrono sea más legible y fácil de mantener, pareciéndose más al código síncrono",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "medium",
+              "category": "Async"
+            },
+            {
+              "id": "q5",
+              "question": "Promise.all() vs Promise.race() - ¿cuál ejecuta todas las promises y cuál solo espera la primera?",
+              "type": "true-false",
+              "options": ["Verdadero", "Falso"],
+              "correctAnswer": 0,
+              "explanation": "Promise.all() espera que todas las promises se resuelvan, mientras que Promise.race() se resuelve con la primera promise que se complete",
+              "timeLimit": 25,
+              "points": 20,
+              "difficulty": "medium",
+              "category": "Async"
+            },
+            {
+              "id": "q6",
+              "question": "¿Cómo se maneja correctamente un error en una función async?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "try catch",
+              "explanation": "En funciones async, los errores se manejan usando bloques try/catch",
+              "timeLimit": 35,
+              "points": 18,
+              "difficulty": "medium",
+              "category": "Async"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-12-20",
+      "status": "published",
+      "completionRate": 78,
+      "certificateEnabled": true
+    },
+    {
+      "id": "react-fundamentals-2024",
+      "title": "React Fundamentals 2024",
+      "description": "Aprende los fundamentos de React desde cero incluyendo hooks, componentes y gestión de estado.",
+      "instructor": "Dr. Carlos Mendoza",
+      "instructorId": "2",
+      "category": "frontend",
+      "difficulty": "Intermedio",
+      "duration": 35,
+      "rating": 4.9,
+      "studentsEnrolled": 987,
+      "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800",
+      "tags": ["react", "frontend", "components", "hooks"],
+      "objectives": [
+        "Crear componentes React funcionales y de clase",
+        "Manejar estado con useState y useEffect",
+        "Implementar comunicación entre componentes",
+        "Construir aplicaciones React completas"
+      ],
+      "prerequisites": ["JavaScript ES6+", "HTML y CSS", "Conceptos básicos de programación"],
+      "modules": [
+        {
+          "id": "mod-react-1",
+          "title": "Introducción a React y JSX",
+          "description": "Conceptos básicos, componentes y JSX",
+          "type": "lesson",
+          "duration": 50,
+          "order": 1,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "react-content-1",
+              "type": "text",
+              "title": "¿Qué es React y por qué usarlo?",
+              "content": "React es una biblioteca de JavaScript desarrollada por Facebook para construir interfaces de usuario interactivas. Se basa en el concepto de componentes reutilizables y un Virtual DOM que optimiza las actualizaciones de la interfaz.\n\nReact utiliza un enfoque declarativo donde describes cómo debería verse la UI en cualquier estado dado, y React se encarga de actualizar eficientemente el DOM cuando los datos cambian.\n\nLas principales ventajas de React incluyen: componentes reutilizables, Virtual DOM para performance, ecosistema robusto, y una gran comunidad de desarrolladores.",
+              "duration": 15
+            },
+            {
+              "id": "react-content-2",
+              "type": "video",
+              "title": "Tu Primer Componente React",
+              "content": "https://example.com/react-video1",
+              "duration": 20
+            },
+            {
+              "id": "react-content-3",
+              "type": "interactive",
+              "title": "JSX: JavaScript XML",
+              "content": "Práctica creando componentes básicos con JSX, entendiendo la sintaxis y las diferencias con HTML",
+              "duration": 15
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "react-q1",
+              "question": "¿Qué es JSX en React?",
+              "type": "multiple-choice",
+              "options": [
+                "Un lenguaje de programación independiente",
+                "Una extensión de sintaxis para JavaScript que permite escribir HTML-like code",
+                "Un framework completo",
+                "Una base de datos para React"
+              ],
+              "correctAnswer": 1,
+              "explanation": "JSX es una extensión de sintaxis para JavaScript que permite escribir código similar a HTML dentro de JavaScript",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "easy",
+              "category": "React Basics"
+            },
+            {
+              "id": "react-q2",
+              "question": "¿Cuáles son los beneficios principales de React?",
+              "type": "multiple-select",
+              "options": [
+                "Virtual DOM para mejor performance",
+                "Componentes reutilizables",
+                "Sintaxis declarativa",
+                "Manejo automático de bases de datos",
+                "Gran ecosistema y comunidad"
+              ],
+              "correctAnswer": 0,
+              "correctAnswers": [0, 1, 2, 4],
+              "explanation": "React no maneja automáticamente bases de datos, pero sí ofrece Virtual DOM, componentes reutilizables, sintaxis declarativa y un gran ecosistema",
+              "timeLimit": 40,
+              "points": 25,
+              "difficulty": "medium",
+              "category": "React Basics"
+            },
+            {
+              "id": "react-q3",
+              "question": "¿React es una biblioteca o un framework?",
+              "type": "true-false",
+              "options": ["Biblioteca", "Framework"],
+              "correctAnswer": 0,
+              "explanation": "React es una biblioteca (library) de JavaScript enfocada en la UI, no un framework completo como Angular",
+              "timeLimit": 20,
+              "points": 10,
+              "difficulty": "easy",
+              "category": "React Basics"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-02-01",
+      "updatedAt": "2024-12-15",
+      "status": "published",
+      "completionRate": 85,
+      "certificateEnabled": true
+    },
+    {
+      "id": "python-data-science-2024",
+      "title": "Python para Ciencia de Datos",
+      "description": "Aprende Python aplicado a ciencia de datos con NumPy, Pandas y visualización.",
+      "instructor": "Prof. Elena Rodriguez",
+      "instructorId": "5",
+      "category": "data-science",
+      "difficulty": "Intermedio",
+      "duration": 45,
+      "rating": 4.9,
+      "studentsEnrolled": 756,
+      "thumbnail": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+      "tags": ["python", "data-science", "numpy", "pandas"],
+      "objectives": [
+        "Dominar NumPy para computación numérica",
+        "Manipular datos con Pandas",
+        "Crear visualizaciones efectivas",
+        "Aplicar análisis estadístico básico"
+      ],
+      "prerequisites": ["Python básico", "Matemáticas básicas", "Estadística elemental"],
+      "modules": [
+        {
+          "id": "mod-py-1",
+          "title": "NumPy: Computación Numérica",
+          "description": "Arrays, operaciones matemáticas y manipulación de datos",
+          "type": "lesson",
+          "duration": 60,
+          "order": 1,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "py-content-1",
+              "type": "text",
+              "title": "Introducción a NumPy",
+              "content": "NumPy (Numerical Python) es la biblioteca fundamental para computación científica en Python. Proporciona un objeto array N-dimensional eficiente y herramientas para trabajar con estos arrays.\n\nLos arrays de NumPy son más eficientes que las listas de Python para operaciones numéricas porque están implementados en C y almacenan datos de manera contigua en memoria.\n\nNumPy también incluye funciones para álgebra lineal, transformadas de Fourier, generación de números aleatorios y muchas otras operaciones matemáticas.",
+              "duration": 20
+            },
+            {
+              "id": "py-content-2",
+              "type": "interactive",
+              "title": "Creación y Manipulación de Arrays",
+              "content": "Ejercicios prácticos para crear arrays, cambiar formas, indexación y slicing",
+              "duration": 25
+            },
+            {
+              "id": "py-content-3",
+              "type": "video",
+              "title": "Operaciones Matemáticas con NumPy",
+              "content": "https://example.com/numpy-video",
+              "duration": 15
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "py-q1",
+              "question": "¿Cuál es la principal ventaja de los arrays de NumPy sobre las listas de Python?",
+              "type": "multiple-choice",
+              "options": [
+                "Son más fáciles de usar",
+                "Ocupan menos memoria y son más rápidos para operaciones numéricas",
+                "Pueden almacenar cualquier tipo de dato",
+                "No tienen limitaciones de tamaño"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Los arrays de NumPy son más eficientes en memoria y velocidad para operaciones numéricas porque están implementados en C",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "medium",
+              "category": "NumPy"
+            },
+            {
+              "id": "py-q2",
+              "question": "¿Qué significa que NumPy almacena datos de manera contigua en memoria?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "en posiciones consecutivas",
+              "explanation": "Los datos se almacenan en posiciones consecutivas de memoria, lo que permite acceso más rápido",
+              "timeLimit": 40,
+              "points": 20,
+              "difficulty": "hard",
+              "category": "NumPy"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-03-10",
+      "updatedAt": "2024-12-10",
+      "status": "published",
+      "completionRate": 72,
+      "certificateEnabled": true
+    }
+  ],
+  "enrollments": [
+    {
+      "id": 1,
+      "userId": 1,
+      "courseId": "js-advanced-2024",
+      "enrolledAt": "2024-11-01T08:00:00Z",
+      "progress": 80,
+      "completed": false
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "courseId": "react-fundamentals-2024",
+      "enrolledAt": "2024-11-05T08:00:00Z",
+      "progress": 75,
+      "completed": false
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "courseId": "python-data-science-2024",
+      "enrolledAt": "2024-11-10T08:00:00Z",
+      "progress": 40,
+      "completed": false
+    },
+    {
+      "id": 4,
+      "userId": 4,
+      "courseId": "react-fundamentals-2024",
+      "enrolledAt": "2024-11-15T08:00:00Z",
+      "progress": 60,
+      "completed": false
+    },
+    {
+      "id": 5,
+      "userId": 4,
+      "courseId": "js-advanced-2024",
+      "enrolledAt": "2024-11-20T08:00:00Z",
+      "progress": 45,
+      "completed": false
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "userId": 1,
+      "courseId": "js-advanced-2024",
+      "type": "trivia",
+      "score": 95,
+      "data": { "score": 19, "questions": 20, "moduleId": "mod-1" },
+      "completedAt": "2025-01-22T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "courseId": "react-fundamentals-2024",
+      "type": "progress",
+      "score": 88,
+      "data": { "moduleId": "mod-react-1", "timeSpent": 45 },
+      "completedAt": "2025-01-21T15:45:00Z"
+    },
+    {
+      "id": 3,
+      "userId": 4,
+      "courseId": "react-fundamentals-2024",
+      "type": "trivia",
+      "score": 82,
+      "data": { "score": 16, "questions": 20, "moduleId": "mod-react-1" },
+      "completedAt": "2025-01-20T14:20:00Z"
+    }
+  ]
+}
