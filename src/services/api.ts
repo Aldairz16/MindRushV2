@@ -34,6 +34,18 @@ export interface Course {
   status: 'draft' | 'published' | 'archived';
   completionRate: number;
   certificateEnabled: boolean;
+  accessCode?: string;
+  isPublic?: boolean;
+  allowSelfEnrollment?: boolean;
+}
+
+export interface CourseEnrollment {
+  id: string;
+  userId: string;
+  courseId: string;
+  enrollmentDate: string;
+  status: 'active' | 'inactive' | 'completed';
+  enrollmentMethod: 'manual' | 'code' | 'invitation';
 }
 
 export interface UserProgress {
@@ -76,6 +88,17 @@ class ApiService {
     } catch (error) {
       console.error('Error fetching users:', error);
       return [];
+    }
+  }
+
+  async getUser(id: number): Promise<User | null> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/${id}`);
+      if (!response.ok) return null;
+      return await response.json();
+    } catch (error) {
+      console.error('Error getting user:', error);
+      return null;
     }
   }
 
@@ -361,6 +384,192 @@ class ApiService {
       console.log('❌ Server health check failed:', error);
       return false;
     }
+  }
+
+  // Métodos para manejo de inscripciones por código
+
+  // Generar código de acceso para un curso
+  async generateCourseAccessCode(courseId: string): Promise<string> {
+    try {
+      const accessCode = this.generateRandomCode();
+      
+      // Actualizar el curso con el nuevo código
+      await fetch(`${API_BASE_URL}/courses/${courseId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          accessCode,
+          allowSelfEnrollment: true
+        }),
+      });
+
+      return accessCode;
+    } catch (error) {
+      console.error('Error generating access code:', error);
+      throw error;
+    }
+  }
+
+  // Verificar si un código de acceso es válido
+  async verifyAccessCode(accessCode: string): Promise<Course | null> {
+    try {
+      const courses = await this.getCourses();
+      const course = courses.find(c => 
+        c.accessCode === accessCode && c.allowSelfEnrollment
+      );
+      return course || null;
+    } catch (error) {
+      console.error('Error verifying access code:', error);
+      return null;
+    }
+  }
+
+  // Inscribir estudiante usando código
+  async enrollStudentWithCode(userId: string, accessCode: string): Promise<{ success: boolean; message: string; course?: Course }> {
+    try {
+      // Verificar código
+      const course = await this.verifyAccessCode(accessCode);
+      if (!course) {
+        return { success: false, message: 'Código de acceso inválido o expirado' };
+      }
+
+      // Verificar si ya está inscrito
+      const user = await this.getUser(parseInt(userId));
+      if (user?.enrolledCourses?.includes(course.id)) {
+        return { success: false, message: 'Ya estás inscrito en este curso' };
+      }
+
+      // Crear inscripción
+      const enrollment: Omit<CourseEnrollment, 'id'> = {
+        userId,
+        courseId: course.id,
+        enrollmentDate: new Date().toISOString(),
+        status: 'active',
+        enrollmentMethod: 'code'
+      };
+
+      const response = await fetch(`${API_BASE_URL}/courseEnrollments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: `enrollment-${Date.now()}`,
+          ...enrollment
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error creating enrollment');
+      }
+
+      // Actualizar lista de cursos del usuario
+      const updatedEnrolledCourses = [...(user?.enrolledCourses || []), course.id];
+      await fetch(`${API_BASE_URL}/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          enrolledCourses: updatedEnrolledCourses
+        }),
+      });
+
+      // Incrementar contador de estudiantes del curso
+      await fetch(`${API_BASE_URL}/courses/${course.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          studentsEnrolled: course.studentsEnrolled + 1
+        }),
+      });
+
+      return { 
+        success: true, 
+        message: `Te has inscrito exitosamente en ${course.title}`,
+        course 
+      };
+    } catch (error) {
+      console.error('Error enrolling student:', error);
+      return { success: false, message: 'Error al inscribirse en el curso' };
+    }
+  }
+
+  // Desinscribir estudiante de un curso
+  async unenrollStudent(userId: string, courseId: string): Promise<{ success: boolean; message: string }> {
+    try {
+      // Buscar inscripción
+      const response = await fetch(`${API_BASE_URL}/courseEnrollments?userId=${userId}&courseId=${courseId}`);
+      const enrollments: CourseEnrollment[] = await response.json();
+      
+      if (enrollments.length === 0) {
+        return { success: false, message: 'No estás inscrito en este curso' };
+      }
+
+      // Eliminar inscripción
+      const enrollment = enrollments[0];
+      await fetch(`${API_BASE_URL}/courseEnrollments/${enrollment.id}`, {
+        method: 'DELETE',
+      });
+
+      // Actualizar lista de cursos del usuario
+      const user = await this.getUser(parseInt(userId));
+      const updatedEnrolledCourses = user?.enrolledCourses?.filter((id: string) => id !== courseId) || [];
+      
+      await fetch(`${API_BASE_URL}/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          enrolledCourses: updatedEnrolledCourses
+        }),
+      });
+
+      // Decrementar contador de estudiantes del curso
+      const course = await this.getCourse(courseId);
+      if (course) {
+        await fetch(`${API_BASE_URL}/courses/${courseId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            studentsEnrolled: Math.max(0, course.studentsEnrolled - 1)
+          }),
+        });
+      }
+
+      return { success: true, message: 'Te has desinscrito del curso exitosamente' };
+    } catch (error) {
+      console.error('Error unenrolling student:', error);
+      return { success: false, message: 'Error al desinscribirse del curso' };
+    }
+  }
+
+  // Obtener inscripciones de un usuario
+  async getUserEnrollments(userId: string): Promise<CourseEnrollment[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/courseEnrollments?userId=${userId}`);
+      return await response.json();
+    } catch (error) {
+      console.error('Error getting user enrollments:', error);
+      return [];
+    }
+  }
+
+  // Generar código aleatorio
+  private generateRandomCode(): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
   }
 }
 

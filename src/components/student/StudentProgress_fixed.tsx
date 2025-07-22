@@ -432,20 +432,9 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                 <div className="space-y-6">
                   {enrolledCourses.map((course) => {
                     const courseProgress = user.progress?.[course.id];
-                    
-                    // Calcular módulos reales basándose en los datos de la BD
+                    const progress = courseProgress?.progress || 0;
+                    const completedModules = courseProgress?.completedModules?.length || 0;
                     const totalModules = course.modules?.length || 0;
-                    const userCompletedModules = courseProgress?.completedModules || [];
-                    
-                    // Solo contar módulos que realmente existen en el curso
-                    const realModuleIds = course.modules?.map(m => m.id) || [];
-                    const validCompletedModules = userCompletedModules.filter((moduleId: string) => 
-                      realModuleIds.includes(moduleId)
-                    );
-                    const completedModules = validCompletedModules.length;
-                    
-                    // Usar progreso recalculado basado en módulos reales
-                    const displayProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
                     
                     return (
                       <div key={course.id} className="border border-gray-200 rounded-lg p-4">
@@ -454,14 +443,14 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                             <h4 className="font-semibold text-gray-900">{course.title}</h4>
                             <p className="text-gray-600 text-sm">{course.description}</p>
                           </div>
-                          <span className="text-2xl font-bold text-blue-600">{displayProgress}%</span>
+                          <span className="text-2xl font-bold text-blue-600">{progress}%</span>
                         </div>
                         
                         <div className="mb-3">
                           <div className="bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${displayProgress}%` }}
+                              style={{ width: `${progress}%` }}
                             />
                           </div>
                         </div>

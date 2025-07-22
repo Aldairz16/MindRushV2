@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { ModuleContentEditor } from './ModuleContentEditor';
 import { CourseCreatorEnhanced } from './CourseCreatorEnhanced';
+import { CourseAccessCodeManager } from './CourseAccessCodeManager';
 import { Course, CourseModule } from '../../data/demoCourses';
 import { apiService } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
@@ -32,6 +33,7 @@ export const CourseManager: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<'all' | 'draft' | 'published' | 'archived'>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showCreateCourse, setShowCreateCourse] = useState(false);
+  const [showAccessCodeManager, setShowAccessCodeManager] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
 
@@ -342,6 +344,14 @@ export const CourseManager: React.FC = () => {
               
               <div className="flex items-center space-x-2">
                 <button
+                  onClick={() => setShowAccessCodeManager(!showAccessCodeManager)}
+                  className="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all"
+                >
+                  <Users className="w-4 h-4" />
+                  <span>Código de Acceso</span>
+                </button>
+                
+                <button
                   onClick={() => handleEditCourse(selectedCourse)}
                   className="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all"
                 >
@@ -393,6 +403,23 @@ export const CourseManager: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Course Access Code Manager */}
+        {showAccessCodeManager && (
+          <div className="mb-6">
+            <CourseAccessCodeManager 
+              course={selectedCourse}
+              onCodeGenerated={(code) => {
+                addNotification({
+                  type: 'success',
+                  title: 'Código generado',
+                  message: `Código de acceso: ${code}`
+                });
+                loadCourses(); // Reload to get updated course data
+              }}
+            />
+          </div>
+        )}
 
         {/* Modules List */}
         <div className="bg-white rounded-xl shadow-lg p-6">

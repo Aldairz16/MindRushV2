@@ -372,8 +372,9 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="mb-8">
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Recent Activity */}
           <div className="bg-white shadow-lg rounded-xl border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900 flex items-center">
@@ -411,9 +412,68 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                 <div className="text-center py-8">
                   <Activity className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Sin actividad reciente</h3>
-                  <p className="text-gray-500">Comienza un curso para ver tu actividad aquí</p>
+                                    <p className="text-gray-500">Comienza un curso para ver tu actividad aquí</p>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Course Progress Section */}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Weekly Progress Chart */}
+          <div className="bg-white shadow-lg rounded-xl border border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                <BarChart3 className="w-5 h-5 mr-2" />
+                Progreso Semanal
+              </h2>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                {weeklyProgress.map((day, index) => {
+                  const maxXP = Math.max(...weeklyProgress.map(d => d.xp), 1);
+                  const percentage = (day.xp / maxXP) * 100;
+                  
+                  return (
+                    <div key={index} className="flex items-center space-x-4">
+                      <div className="w-8 text-sm font-medium text-gray-600">{day.day}</div>
+                      <div className="flex-1">
+                        <div className="bg-gray-200 rounded-full h-3">
+                          <div 
+                            className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-300"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className="text-sm font-medium text-gray-900 w-16 text-right">
+                        {day.xp} XP
+                      </div>
+                      <div className="text-xs text-gray-500 w-12 text-right">
+                        {day.activities} act.
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h4 className="font-medium text-blue-900 mb-2">Resumen de la Semana</h4>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-blue-600">XP Total:</span>
+                    <span className="font-semibold ml-2">{weeklyProgress.reduce((sum, day) => sum + day.xp, 0)}</span>
+                  </div>
+                  <div>
+                    <span className="text-blue-600">Actividades:</span>
+                    <span className="font-semibold ml-2">{weeklyProgress.reduce((sum, day) => sum + day.activities, 0)}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -432,20 +492,7 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                 <div className="space-y-6">
                   {enrolledCourses.map((course) => {
                     const courseProgress = user.progress?.[course.id];
-                    
-                    // Calcular módulos reales basándose en los datos de la BD
-                    const totalModules = course.modules?.length || 0;
-                    const userCompletedModules = courseProgress?.completedModules || [];
-                    
-                    // Solo contar módulos que realmente existen en el curso
-                    const realModuleIds = course.modules?.map(m => m.id) || [];
-                    const validCompletedModules = userCompletedModules.filter((moduleId: string) => 
-                      realModuleIds.includes(moduleId)
-                    );
-                    const completedModules = validCompletedModules.length;
-                    
-                    // Usar progreso recalculado basado en módulos reales
-                    const displayProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
+                    const progress = courseProgress?.progress || 0;
                     
                     return (
                       <div key={course.id} className="border border-gray-200 rounded-lg p-4">
@@ -454,14 +501,14 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                             <h4 className="font-semibold text-gray-900">{course.title}</h4>
                             <p className="text-gray-600 text-sm">{course.description}</p>
                           </div>
-                          <span className="text-2xl font-bold text-blue-600">{displayProgress}%</span>
+                          <span className="text-2xl font-bold text-blue-600">{progress}%</span>
                         </div>
                         
                         <div className="mb-3">
                           <div className="bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${displayProgress}%` }}
+                              style={{ width: `${progress}%` }}
                             />
                           </div>
                         </div>
@@ -470,7 +517,7 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                           <div>
                             <span className="text-gray-600">Módulos:</span>
                             <span className="font-semibold ml-2">
-                              {completedModules}/{totalModules}
+                              {courseProgress?.completedModules?.length || 0}/{course.modules?.length || 0}
                             </span>
                           </div>
                           <div>

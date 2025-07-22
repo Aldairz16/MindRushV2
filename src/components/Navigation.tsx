@@ -33,6 +33,7 @@ export const Navigation: React.FC<NavigationProps> = ({ user, onLogout, activeSe
     if (user.role === 'student') {
       const studentItems = [
         { id: 'courses', label: 'Explorar Cursos', icon: BookOpen },
+        { id: 'manage-courses', label: 'Gestionar Cursos', icon: Users },
         { id: 'progress', label: 'Mi Progreso', icon: BarChart3 },
       ];
       return [...baseItems, ...studentItems];

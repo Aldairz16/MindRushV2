@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { CourseExplorer } from '../student/CourseExplorer';
 import { StudentProgress } from '../student/StudentProgress';
+import { JoinCourseWithCode } from '../student/JoinCourseWithCode';
+import { CourseUnenrollManager } from '../student/CourseUnenrollManager';
 import { apiService, Course, User } from '../../services/api';
 import { demoCourses } from '../../data/demoCourses';
 
@@ -108,8 +110,65 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ user, active
     return <CourseExplorer />;
   }
 
+  if (activeSection === 'manage-courses') {
+    return (
+      <div className="space-y-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            Gestión de Cursos
+          </h2>
+          
+          <div className="space-y-8">
+            {/* Unirse a curso */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                Unirse a un Curso
+              </h3>
+              <JoinCourseWithCode 
+                userId={user.id.toString()}
+                onCourseJoined={() => {
+                  loadDashboardData(); // Reload to update enrolled courses
+                }}
+              />
+            </div>
+
+            {/* Salirse de cursos */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                Mis Cursos Inscritos
+              </h3>
+              {enrolledCourses.length === 0 ? (
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  No estás inscrito en ningún curso
+                </div>
+              ) : (
+                <div className="grid gap-4">
+                  {enrolledCourses.map((course) => (
+                    <div key={course.id} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex justify-between items-center">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white">{course.title}</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{course.description}</p>
+                      </div>
+                      <CourseUnenrollManager 
+                        course={course}
+                        userId={user.id.toString()}
+                        onCourseLeft={() => {
+                          loadDashboardData(); // Reload to update enrolled courses
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (activeSection === 'progress') {
-    return <StudentProgress />;
+    return <StudentProgress user={user} />;
   }
 
   // Calculate stats from user data

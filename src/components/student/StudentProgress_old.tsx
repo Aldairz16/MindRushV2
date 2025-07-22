@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
+  TrendingUp, 
   Award, 
   Target, 
+  Calendar,
+  BarChart3,
   Star,
   Clock,
   BookOpen,
@@ -9,9 +12,11 @@ import {
   Trophy,
   Flame,
   CheckCircle,
-  Activity
+  Activity,
+  User,
+  Globe
 } from 'lucide-react';
-import { apiService, User as UserType, Course } from '../../services/api';
+import { apiService, User as UserType, Course, Activity as ActivityType } from '../../services/api';
 
 interface StudentProgressProps {
   user: UserType;
@@ -40,19 +45,13 @@ interface RecentActivityData {
   moduleId?: string;
 }
 
-export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
-  // Early return if user is not provided
-  if (!user || !user.id) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">Error: Usuario no encontrado</p>
-        </div>
-      </div>
-    );
-  }
+interface WeeklyProgressData {
+  day: string;
+  xp: number;
+  activities: number;
+}
 
+export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
   const [progressData, setProgressData] = useState<ProgressData>({
     completedCourses: 0,
     activeCourses: 0,
@@ -66,15 +65,14 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
   });
   
   const [recentActivity, setRecentActivity] = useState<RecentActivityData[]>([]);
+  const [weeklyProgress, setWeeklyProgress] = useState<WeeklyProgressData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
 
   useEffect(() => {
-    if (user && user.id) {
-      loadProgressData();
-    }
-  }, [user?.id]);
+    loadProgressData();
+  }, [user.id]);
 
   const loadProgressData = async () => {
     try {
@@ -97,7 +95,7 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
 
       // Calculate progress data from user stats and activities
       const calculatedProgress: ProgressData = {
-        completedCourses: user.stats?.coursesCompleted || 0,
+        completedCourses: user.stats?.coursesCompleted || user.completedCourses?.length || 0,
         activeCourses: user.stats?.coursesEnrolled || user.enrolledCourses?.length || 0,
         totalXP: user.stats?.totalXP || 0,
         currentLevel: user.stats?.currentLevel || 1,
@@ -111,22 +109,26 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
 
       // Process recent activities
       const processedActivities = userActivities
-        .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+        .sort((a, b) => new Date(b.completedAt || b.timestamp).getTime() - new Date(a.completedAt || a.timestamp).getTime())
         .slice(0, 10)
         .map(activity => {
           const course = coursesMap.get(activity.courseId);
           return {
-            id: activity.id?.toString() || Math.random().toString(),
+            id: activity.id,
             course: course?.title || activity.courseId,
             activity: getActivityDescription(activity),
             score: activity.score || 0,
-            date: formatDate(activity.timestamp),
+            date: formatDate(activity.completedAt || activity.timestamp),
             xp: calculateXPFromActivity(activity),
             type: activity.type,
-            moduleId: activity.moduleId
+            moduleId: activity.data?.moduleId
           };
         });
       setRecentActivity(processedActivities);
+
+      // Calculate weekly progress
+      const weeklyData = calculateWeeklyProgress(userActivities);
+      setWeeklyProgress(weeklyData);
 
     } catch (err) {
       console.error('Error loading progress data:', err);
@@ -201,6 +203,27 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
     return Math.round(base * (0.5 + scoreMultiplier * 0.5));
   };
 
+  const calculateWeeklyProgress = (activities: any[]): WeeklyProgressData[] => {
+    const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    const weekData = days.map(day => ({ day, xp: 0, activities: 0 }));
+    
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    
+    activities.forEach(activity => {
+      const activityDate = new Date(activity.completedAt || activity.timestamp);
+      const daysDiff = Math.floor((activityDate.getTime() - startOfWeek.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff >= 0 && daysDiff < 7) {
+        weekData[daysDiff].xp += calculateXPFromActivity(activity);
+        weekData[daysDiff].activities += 1;
+      }
+    });
+    
+    return weekData;
+  };
+
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     const now = new Date();
@@ -211,6 +234,13 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
     if (diffDays === 0) return 'Hoy';
     if (diffDays < 7) return `Hace ${diffDays} días`;
     return date.toLocaleDateString('es-ES');
+  };
+
+  const getScoreColor = (score: number): string => {
+    if (score >= 90) return 'text-green-600';
+    if (score >= 80) return 'text-blue-600';
+    if (score >= 70) return 'text-yellow-600';
+    return 'text-red-600';
   };
 
   const getScoreBadgeColor = (score: number): string => {
@@ -372,8 +402,9 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
           </div>
         </div>
 
-        {/* Recent Activity */}
-        <div className="mb-8">
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Recent Activity */}
           <div className="bg-white shadow-lg rounded-xl border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900 flex items-center">
@@ -416,6 +447,58 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
               )}
             </div>
           </div>
+
+          {/* Weekly Progress Chart */}
+          <div className="bg-white shadow-lg rounded-xl border border-gray-200">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                <BarChart3 className="w-5 h-5 mr-2" />
+                Progreso Semanal
+              </h2>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
+                {weeklyProgress.map((day, index) => {
+                  const maxXP = Math.max(...weeklyProgress.map(d => d.xp), 1);
+                  const percentage = (day.xp / maxXP) * 100;
+                  
+                  return (
+                    <div key={index} className="flex items-center space-x-4">
+                      <div className="w-8 text-sm font-medium text-gray-600">{day.day}</div>
+                      <div className="flex-1">
+                        <div className="bg-gray-200 rounded-full h-3">
+                          <div 
+                            className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-300"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className="text-sm font-medium text-gray-900 w-16 text-right">
+                        {day.xp} XP
+                      </div>
+                      <div className="text-xs text-gray-500 w-12 text-right">
+                        {day.activities} act.
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h4 className="font-medium text-blue-900 mb-2">Resumen de la Semana</h4>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="text-blue-600">XP Total:</span>
+                    <span className="font-semibold ml-2">{weeklyProgress.reduce((sum, day) => sum + day.xp, 0)}</span>
+                  </div>
+                  <div>
+                    <span className="text-blue-600">Actividades:</span>
+                    <span className="font-semibold ml-2">{weeklyProgress.reduce((sum, day) => sum + day.activities, 0)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Course Progress Section */}
@@ -432,20 +515,7 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                 <div className="space-y-6">
                   {enrolledCourses.map((course) => {
                     const courseProgress = user.progress?.[course.id];
-                    
-                    // Calcular módulos reales basándose en los datos de la BD
-                    const totalModules = course.modules?.length || 0;
-                    const userCompletedModules = courseProgress?.completedModules || [];
-                    
-                    // Solo contar módulos que realmente existen en el curso
-                    const realModuleIds = course.modules?.map(m => m.id) || [];
-                    const validCompletedModules = userCompletedModules.filter((moduleId: string) => 
-                      realModuleIds.includes(moduleId)
-                    );
-                    const completedModules = validCompletedModules.length;
-                    
-                    // Usar progreso recalculado basado en módulos reales
-                    const displayProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
+                    const progress = courseProgress?.progress || 0;
                     
                     return (
                       <div key={course.id} className="border border-gray-200 rounded-lg p-4">
@@ -454,14 +524,14 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                             <h4 className="font-semibold text-gray-900">{course.title}</h4>
                             <p className="text-gray-600 text-sm">{course.description}</p>
                           </div>
-                          <span className="text-2xl font-bold text-blue-600">{displayProgress}%</span>
+                          <span className="text-2xl font-bold text-blue-600">{progress}%</span>
                         </div>
                         
                         <div className="mb-3">
                           <div className="bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${displayProgress}%` }}
+                              style={{ width: `${progress}%` }}
                             />
                           </div>
                         </div>
@@ -470,7 +540,7 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                           <div>
                             <span className="text-gray-600">Módulos:</span>
                             <span className="font-semibold ml-2">
-                              {completedModules}/{totalModules}
+                              {courseProgress?.completedModules?.length || 0}/{course.modules?.length || 0}
                             </span>
                           </div>
                           <div>
@@ -500,6 +570,148 @@ export const StudentProgress: React.FC<StudentProgressProps> = ({ user }) => {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+    { day: 'Mar', xp: 80 },
+    { day: 'Mié', xp: 150 },
+    { day: 'Jue', xp: 90 },
+    { day: 'Vie', xp: 200 },
+    { day: 'Sáb', xp: 60 },
+    { day: 'Dom', xp: 100 }
+  ];
+
+  return (
+    <div className="p-4 lg:p-6 space-y-6">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 text-white">
+        <h1 className="text-2xl lg:text-3xl font-bold mb-2">Mi Progreso de Aprendizaje</h1>
+        <p className="text-blue-100">Seguimiento detallado de tu evolución académica</p>
+      </div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg p-4 shadow-sm border">
+          <div className="flex items-center justify-between mb-2">
+            <BookOpen className="w-8 h-8 text-blue-500" />
+            <span className="text-2xl font-bold text-gray-800">{progressData.completedCourses}</span>
+          </div>
+          <p className="text-sm text-gray-600">Cursos Completados</p>
+        </div>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm border">
+          <div className="flex items-center justify-between mb-2">
+            <Target className="w-8 h-8 text-green-500" />
+            <span className="text-2xl font-bold text-gray-800">{progressData.activeCourses}</span>
+          </div>
+          <p className="text-sm text-gray-600">Cursos Activos</p>
+        </div>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm border">
+          <div className="flex items-center justify-between mb-2">
+            <Star className="w-8 h-8 text-yellow-500" />
+            <span className="text-2xl font-bold text-gray-800">{progressData.totalXP}</span>
+          </div>
+          <p className="text-sm text-gray-600">XP Total</p>
+        </div>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm border">
+          <div className="flex items-center justify-between mb-2">
+            <Award className="w-8 h-8 text-purple-500" />
+            <span className="text-2xl font-bold text-gray-800">{progressData.achievements}</span>
+          </div>
+          <p className="text-sm text-gray-600">Logros</p>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Progreso Semanal */}
+        <div className="bg-white rounded-lg p-6 shadow-sm border">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+            <BarChart3 className="w-5 h-5 mr-2 text-blue-500" />
+            XP Esta Semana
+          </h3>
+          <div className="space-y-3">
+            {weeklyProgress.map((day, index) => (
+              <div key={index} className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-600 w-12">{day.day}</span>
+                <div className="flex-1 mx-4">
+                  <div className="bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${(day.xp / 200) * 100}%` }}
+                    />
+                  </div>
+                </div>
+                <span className="text-sm font-semibold text-gray-800 w-12 text-right">{day.xp}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Actividad Reciente */}
+        <div className="bg-white rounded-lg p-6 shadow-sm border">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+            <Clock className="w-5 h-5 mr-2 text-green-500" />
+            Actividad Reciente
+          </h3>
+          <div className="space-y-4">
+            {recentActivity.map((activity, index) => (
+              <div key={index} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                <div className="flex-shrink-0">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <BookOpen className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-800">{activity.course}</p>
+                  <p className="text-xs text-gray-600">{activity.activity}</p>
+                  <div className="flex items-center mt-1 space-x-2">
+                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                      {activity.score}%
+                    </span>
+                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                      +{activity.xp} XP
+                    </span>
+                  </div>
+                </div>
+                <div className="text-xs text-gray-500">
+                  {new Date(activity.date).toLocaleDateString('es-ES', { 
+                    month: 'short', 
+                    day: 'numeric' 
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Estadísticas Generales */}
+      <div className="bg-white rounded-lg p-6 shadow-sm border">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <TrendingUp className="w-5 h-5 mr-2 text-purple-500" />
+          Estadísticas Generales
+        </h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+            <div className="text-2xl font-bold text-blue-600">{progressData.averageScore}%</div>
+            <div className="text-sm text-blue-700">Promedio General</div>
+          </div>
+          <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+            <div className="text-2xl font-bold text-green-600">{progressData.streak}</div>
+            <div className="text-sm text-green-700">Días Consecutivos</div>
+          </div>
+          <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+            <div className="text-2xl font-bold text-purple-600">{progressData.studyTime}h</div>
+            <div className="text-sm text-purple-700">Tiempo Total</div>
+          </div>
+          <div className="text-center p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg">
+            <div className="text-2xl font-bold text-yellow-600">Nivel {progressData.currentLevel}</div>
+            <div className="text-sm text-yellow-700">Nivel Actual</div>
           </div>
         </div>
       </div>
