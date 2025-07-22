@@ -1,0 +1,725 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "student@mindrush.com",
+      "password": "password",
+      "role": "student",
+      "name": "Ana García",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150",
+      "bio": "Estudiante de Ingeniería en Sistemas, apasionada por el desarrollo web y la inteligencia artificial.",
+      "location": "Madrid, España",
+      "joinedAt": "2024-09-15T08:00:00Z",
+      "stats": {
+        "completedLevels": 12,
+        "currentLevel": 13,
+        "totalXP": 2450,
+        "unlockedLevels": 15,
+        "coursesEnrolled": 3,
+        "coursesCompleted": 2,
+        "averageScore": 88,
+        "studyStreak": 15,
+        "totalStudyHours": 67,
+        "certificatesEarned": 2
+      },
+      "progress": {
+        "historia-universal-2024": {
+          "completedModules": ["mod-1"],
+          "currentModule": "mod-2",
+          "progress": 50,
+          "xp": 160,
+          "lastActivity": "2025-01-22T10:30:00Z",
+          "timeSpent": 8,
+          "quizScores": [85]
+        },
+        "geografia-mundial-2024": {
+          "completedModules": ["mod-geo-1"],
+          "currentModule": "mod-geo-2",
+          "progress": 75,
+          "xp": 140,
+          "lastActivity": "2025-01-21T15:45:00Z",
+          "timeSpent": 12,
+          "quizScores": [90]
+        }
+      },
+      "enrolledCourses": [
+        "historia-universal-2024",
+        "geografia-mundial-2024",
+        "ciencias-naturales-2024"
+      ],
+      "completedCourses": [
+        "matematicas-basicas",
+        "lectura-comprensiva"
+      ]
+    },
+    {
+      "id": "2",
+      "email": "teacher@mindrush.com",
+      "password": "password",
+      "role": "teacher",
+      "name": "Dr. Carlos Mendoza",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+      "bio": "Profesor de Ciencias de la Computación con 15 años de experiencia en desarrollo web y educación tecnológica.",
+      "location": "Barcelona, España",
+      "joinedAt": "2023-01-10T08:00:00Z",
+      "stats": {
+        "coursesCreated": 3,
+        "studentsEnrolled": 1847,
+        "averageRating": 4.8,
+        "totalHoursTeaching": 2340,
+        "certificatesIssued": 892,
+        "activeStudents": 567
+      },
+      "specialties": [
+        "Historia",
+        "Geografía",
+        "Cultura General",
+        "Educación",
+        "Metodología"
+      ],
+      "teachingExperience": "15 años"
+    },
+    {
+      "id": "3",
+      "email": "admin@mindrush.com",
+      "password": "password",
+      "role": "admin",
+      "name": "María López",
+      "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+      "bio": "Administradora de la plataforma MindRush, especializada en gestión educativa y análisis de datos.",
+      "location": "Valencia, España",
+      "joinedAt": "2023-01-01T08:00:00Z"
+    },
+    {
+      "id": "4",
+      "email": "luis.martinez@email.com",
+      "password": "password",
+      "role": "student",
+      "name": "Luis Martínez",
+      "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150",
+      "bio": "Desarrollador junior buscando especializarse en tecnologías modernas de frontend.",
+      "location": "México DF, México",
+      "joinedAt": "2024-11-10T08:00:00Z",
+      "stats": {
+        "completedLevels": 8,
+        "currentLevel": 9,
+        "totalXP": 1680,
+        "unlockedLevels": 10,
+        "coursesEnrolled": 3,
+        "coursesCompleted": 2,
+        "averageScore": 82,
+        "studyStreak": 8,
+        "totalStudyHours": 45,
+        "certificatesEarned": 1
+      },
+      "enrolledCourses": [
+        "geografia-mundial-2024",
+        "historia-universal-2024",
+        "ciencias-naturales-2024"
+      ],
+      "completedCourses": [
+        "matematicas-basicas",
+        "lectura-comprensiva"
+      ]
+    },
+    {
+      "id": "5",
+      "email": "teacher2@mindrush.com",
+      "password": "password",
+      "role": "teacher",
+      "name": "Prof. Elena Rodriguez",
+      "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b5c0?w=150",
+      "bio": "Especialista en Ciencia de Datos y Python, con experiencia en machine learning y análisis estadístico.",
+      "location": "Buenos Aires, Argentina",
+      "joinedAt": "2023-06-15T08:00:00Z",
+      "stats": {
+        "coursesCreated": 1,
+        "studentsEnrolled": 923,
+        "averageRating": 4.9,
+        "totalHoursTeaching": 1560,
+        "certificatesIssued": 445,
+        "activeStudents": 298
+      },
+      "specialties": [
+        "Ciencias Naturales",
+        "Biología",
+        "Método Científico",
+        "Investigación",
+        "Educación Científica"
+      ],
+      "teachingExperience": "12 años"
+    }
+  ],
+  "courses": [
+    {
+      "id": "historia-universal-2024",
+      "title": "Historia Universal Básica",
+      "description": "Un recorrido por los eventos más importantes de la historia de la humanidad desde las civilizaciones antiguas hasta el siglo XXI.",
+      "instructor": "Dr. Carlos Mendoza",
+      "instructorId": "2",
+      "category": "cultura-general",
+      "difficulty": "Básico",
+      "duration": 25,
+      "rating": 4.8,
+      "studentsEnrolled": 1247,
+      "thumbnail": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800",
+      "accessCode": "HIST24",
+      "isPublic": true,
+      "allowSelfEnrollment": true,
+      "tags": ["historia", "cultura", "civilizaciones", "eventos históricos"],
+      "objectives": [
+        "Conocer las principales civilizaciones antiguas",
+        "Comprender los eventos históricos más relevantes",
+        "Analizar el impacto de la historia en el presente",
+        "Desarrollar pensamiento crítico sobre eventos históricos"
+      ],
+      "prerequisites": [
+        "Educación básica",
+        "Interés por la historia",
+        "Capacidad de lectura comprensiva"
+      ],
+      "modules": [
+        {
+          "id": "mod-1",
+          "title": "Civilizaciones Antiguas",
+          "description": "Explora las grandes civilizaciones de la antigüedad",
+          "type": "lesson",
+          "duration": 45,
+          "order": 1,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "content-1",
+              "type": "text",
+              "title": "Mesopotamia: La Cuna de la Civilización",
+              "content": "Mesopotamia, ubicada entre los ríos Tigris y Éufrates (actual Iraq), es considerada la cuna de la civilización. Aquí surgieron las primeras ciudades-estado, la escritura cuneiforme y el código de leyes más antiguo conocido: el Código de Hammurabi.\n\nLas civilizaciones mesopotámicas como los sumerios, babilonios y asirios desarrollaron avances fundamentales en agricultura, astronomía, matemáticas y arquitectura. Inventaron la rueda, el arado y desarrollaron sistemas de irrigación que permitieron la agricultura en zonas áridas.\n\nLa escritura cuneiforme, desarrollada alrededor del 3200 a.C., fue uno de los logros más importantes, permitiendo el registro de leyes, transacciones comerciales y literatura épica como la Epopeya de Gilgamesh.",
+              "duration": 15
+            },
+            {
+              "id": "content-2",
+              "type": "text",
+              "title": "Antiguo Egipto: El Regalo del Nilo",
+              "content": "La civilización egipcia se desarrolló a lo largo del río Nilo durante más de 3000 años. Los egipcios desarrollaron un sistema de escritura jeroglífica, construyeron monumentos impresionantes como las pirámides y establecieron un complejo sistema religioso centrado en la vida después de la muerte.",
+              "duration": 20
+            },
+            {
+              "id": "content-3",
+              "type": "interactive",
+              "title": "Comparación de Civilizaciones Antiguas",
+              "content": "Actividad interactiva para comparar las características principales de Mesopotamia, Egipto, Indo y China antigua",
+              "duration": 10
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "q1",
+              "question": "¿Qué civilización desarrolló la escritura cuneiforme?",
+              "type": "multiple-choice",
+              "options": ["Egipcios", "Sumerios", "Griegos", "Romanos"],
+              "correctAnswer": 1,
+              "explanation": "Los sumerios de Mesopotamia desarrollaron la escritura cuneiforme alrededor del 3200 a.C.",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "easy",
+              "category": "Historia Antigua"
+            },
+            {
+              "id": "q2",
+              "question": "¿Cuál fue el código de leyes más antiguo conocido?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "codigo de hammurabi",
+              "explanation": "El Código de Hammurabi, del rey babilonio Hammurabi (1792-1750 a.C.), es el código de leyes más antiguo conocido",
+              "timeLimit": 45,
+              "points": 20,
+              "difficulty": "medium",
+              "category": "Historia Antigua"
+            },
+            {
+              "id": "q3",
+              "question": "¿Cuáles de los siguientes fueron inventos de las civilizaciones mesopotámicas?",
+              "type": "multiple-select",
+              "options": [
+                "La rueda",
+                "El arado", 
+                "La escritura cuneiforme",
+                "Los jeroglíficos",
+                "Sistemas de irrigación",
+                "El papel"
+              ],
+              "correctAnswer": 0,
+              "correctAnswers": [0, 1, 2, 4],
+              "explanation": "Los jeroglíficos fueron egipcios y el papel fue inventado en China. Las civilizaciones mesopotámicas inventaron la rueda, el arado, la escritura cuneiforme y sistemas de irrigación",
+              "timeLimit": 40,
+              "points": 25,
+              "difficulty": "hard",
+              "category": "Historia Antigua"
+            },
+            {
+              "id": "q4",
+              "question": "¿Verdadero o Falso? Mesopotamia significa 'entre ríos' en griego",
+              "type": "true-false",
+              "options": ["Verdadero", "Falso"],
+              "correctAnswer": 0,
+              "explanation": "Mesopotamia significa literalmente 'entre ríos' (mesos = entre, potamos = río) en griego, refiriéndose a la región entre los ríos Tigris y Éufrates",
+              "timeLimit": 25,
+              "points": 10,
+              "difficulty": "easy",
+              "category": "Historia Antigua"
+            }
+          ]
+        },
+        {
+          "id": "mod-2",
+          "title": "Grecia y Roma Clásicas",
+          "description": "La herencia cultural de Grecia y el Imperio Romano",
+          "type": "lesson",
+          "duration": 50,
+          "order": 2,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "content-4",
+              "type": "text",
+              "title": "La Grecia Clásica: Filosofía y Democracia",
+              "content": "La antigua Grecia sentó las bases de la civilización occidental con sus contribuciones en filosofía, política, arte y ciencia. Atenas desarrolló la primera forma de democracia, mientras que filósofos como Sócrates, Platón y Aristóteles establecieron fundamentos del pensamiento occidental.\n\nLos griegos también fueron pioneros en matemáticas, medicina, teatro y arquitectura. Sus polis (ciudades-estado) como Atenas y Esparta representaron diferentes modelos de organización social y política.\n\nLos Juegos Olímpicos, iniciados en 776 a.C. en honor a Zeus, reflejan la importancia del atletismo y la competencia en la cultura griega.",
+              "duration": 20
+            },
+            {
+              "id": "content-5",
+              "type": "text",
+              "title": "El Imperio Romano: Ingeniería y Derecho",
+              "content": "Roma evolucionó de una pequeña ciudad-estado a un vasto imperio que dominó el Mediterráneo durante siglos. Los romanos fueron maestros en ingeniería, construyendo acueductos, carreteras y monumentos que perduran hasta hoy.",
+              "duration": 20
+            },
+            {
+              "id": "content-6",
+              "type": "interactive",
+              "title": "Legado Greco-Romano en el Mundo Moderno",
+              "content": "Ejercicio para identificar elementos de la cultura griega y romana presentes en la sociedad actual",
+              "duration": 10
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "q5",
+              "question": "¿Qué filósofo griego fue maestro de Platón?",
+              "type": "multiple-choice",
+              "options": ["Aristóteles", "Sócrates", "Tales de Mileto", "Heráclito"],
+              "correctAnswer": 1,
+              "explanation": "Sócrates fue el maestro de Platón, quien a su vez fue maestro de Aristóteles",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "medium",
+              "category": "Filosofía Griega"
+            },
+            {
+              "id": "q6",
+              "question": "¿En qué año comenzaron los primeros Juegos Olímpicos?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "776",
+              "explanation": "Los primeros Juegos Olímpicos se celebraron en 776 a.C. en Olimpia, Grecia",
+              "timeLimit": 35,
+              "points": 18,
+              "difficulty": "medium",
+              "category": "Historia Griega"
+            },
+            {
+              "id": "q7",
+              "question": "¿Cuáles fueron las principales contribuciones de Roma?",
+              "type": "multiple-select",
+              "options": [
+                "Derecho romano",
+                "Ingeniería y arquitectura",
+                "Red de carreteras",
+                "Democracia directa",
+                "Acueductos",
+                "Teatro griego"
+              ],
+              "correctAnswer": 0,
+              "correctAnswers": [0, 1, 2, 4],
+              "explanation": "La democracia directa fue griega y el teatro también. Roma contribuyó con el derecho, ingeniería, carreteras y acueductos",
+              "timeLimit": 45,
+              "points": 25,
+              "difficulty": "hard",
+              "category": "Historia Romana"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2025-07-22",
+      "status": "published",
+      "completionRate": 78,
+      "certificateEnabled": true
+    },
+    {
+      "id": "geografia-mundial-2024",
+      "title": "Geografía Mundial",
+      "description": "Conoce los continentes, países, capitales y características geográficas más importantes del mundo.",
+      "instructor": "Dr. Carlos Mendoza",
+      "instructorId": "2",
+      "category": "cultura-general",
+      "difficulty": "Básico",
+      "duration": 20,
+      "rating": 4.9,
+      "studentsEnrolled": 987,
+      "thumbnail": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      "accessCode": "GEO24B",
+      "isPublic": true,
+      "allowSelfEnrollment": true,
+      "tags": ["geografía", "países", "capitales", "continentes"],
+      "objectives": [
+        "Identificar países y capitales principales",
+        "Conocer características geográficas importantes",
+        "Comprender la distribución continental",
+        "Desarrollar conocimiento espacial mundial"
+      ],
+      "prerequisites": [
+        "Educación básica",
+        "Nociones básicas de ubicación",
+        "Interés por la geografía"
+      ],
+      "modules": [
+        {
+          "id": "mod-geo-1",
+          "title": "Continentes y Océanos",
+          "description": "Los continentes, océanos y principales características geográficas",
+          "type": "lesson",
+          "duration": 40,
+          "order": 1,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "geo-content-1",
+              "type": "text",
+              "title": "Los Siete Continentes",
+              "content": "La Tierra está dividida en siete continentes: Asia, África, América del Norte, América del Sur, Antártida, Europa y Oceanía. Asia es el continente más grande tanto en área como en población, mientras que Oceanía es el más pequeño.\n\nCada continente tiene características únicas en términos de clima, culturas, idiomas y desarrollo económico. Asia alberga más de 4.6 mil millones de personas, representando aproximadamente el 60% de la población mundial.\n\nLos continentes están separados por océanos, siendo el Océano Pacífico el más grande, seguido por el Atlántico, Índico, Antártico y Ártico.",
+              "duration": 15
+            },
+            {
+              "id": "geo-content-2",
+              "type": "text",
+              "title": "Principales Características Geográficas",
+              "content": "Entre las formaciones geográficas más notables del mundo se encuentran el Monte Everest (8,848 m), la Fosa de las Marianas (-11,034 m), el Río Amazonas y el Desierto del Sahara.",
+              "duration": 15
+            },
+            {
+              "id": "geo-content-3",
+              "type": "interactive",
+              "title": "Mapa Interactivo Mundial",
+              "content": "Ejercicio de ubicación de continentes, océanos y principales accidentes geográficos",
+              "duration": 10
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "geo-q1",
+              "question": "¿Cuál es el continente más grande del mundo?",
+              "type": "multiple-choice",
+              "options": ["África", "Asia", "América del Norte", "Europa"],
+              "correctAnswer": 1,
+              "explanation": "Asia es el continente más grande tanto en superficie como en población",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "easy",
+              "category": "Geografía Básica"
+            },
+            {
+              "id": "geo-q2",
+              "question": "¿Cuántos continentes hay en total?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "7",
+              "explanation": "Existen 7 continentes: Asia, África, América del Norte, América del Sur, Antártida, Europa y Oceanía",
+              "timeLimit": 25,
+              "points": 10,
+              "difficulty": "easy",
+              "category": "Geografía Básica"
+            },
+            {
+              "id": "geo-q3",
+              "question": "¿Cuáles son océanos del mundo?",
+              "type": "multiple-select",
+              "options": [
+                "Pacífico",
+                "Atlántico", 
+                "Índico",
+                "Mediterráneo",
+                "Antártico",
+                "Ártico"
+              ],
+              "correctAnswer": 0,
+              "correctAnswers": [0, 1, 2, 4, 5],
+              "explanation": "Los cinco océanos son: Pacífico, Atlántico, Índico, Antártico y Ártico. El Mediterráneo es un mar",
+              "timeLimit": 40,
+              "points": 25,
+              "difficulty": "medium",
+              "category": "Geografía Básica"
+            },
+            {
+              "id": "geo-q4",
+              "question": "¿Verdadero o Falso? El Monte Everest es la montaña más alta del mundo",
+              "type": "true-false",
+              "options": ["Verdadero", "Falso"],
+              "correctAnswer": 0,
+              "explanation": "El Monte Everest, con 8,848 metros de altura, es efectivamente la montaña más alta del mundo",
+              "timeLimit": 20,
+              "points": 10,
+              "difficulty": "easy",
+              "category": "Geografía Física"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-02-01",
+      "updatedAt": "2024-12-15",
+      "status": "published",
+      "completionRate": 85,
+      "certificateEnabled": true
+    },
+    {
+      "id": "ciencias-naturales-2024",
+      "title": "Ciencias Naturales Básicas",
+      "description": "Fundamentos de biología, química y física explicados de manera sencilla y práctica.",
+      "instructor": "Prof. Elena Rodriguez",
+      "instructorId": "5",
+      "category": "ciencias",
+      "difficulty": "Básico",
+      "duration": 30,
+      "rating": 4.9,
+      "studentsEnrolled": 756,
+      "thumbnail": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      "accessCode": "CIEN24",
+      "isPublic": true,
+      "allowSelfEnrollment": true,
+      "tags": ["biología", "química", "física", "ciencias naturales"],
+      "objectives": [
+        "Comprender conceptos básicos de biología",
+        "Conocer principios fundamentales de química",
+        "Entender leyes básicas de física",
+        "Aplicar el método científico"
+      ],
+      "prerequisites": [
+        "Educación básica",
+        "Matemáticas elementales",
+        "Curiosidad científica"
+      ],
+      "modules": [
+        {
+          "id": "mod-cien-1",
+          "title": "El Método Científico y la Vida",
+          "description": "Introducción al método científico y conceptos básicos de biología",
+          "type": "lesson",
+          "duration": 45,
+          "order": 1,
+          "nodeType": "theory",
+          "content": [
+            {
+              "id": "cien-content-1",
+              "type": "text",
+              "title": "¿Qué es el Método Científico?",
+              "content": "El método científico es un proceso sistemático de investigación que utilizan los científicos para obtener conocimiento sobre el mundo natural. Consiste en varios pasos: observación, formulación de hipótesis, experimentación, análisis de datos y conclusiones.\n\nEste método nos permite distinguir entre creencias y conocimiento científico verificable. La reproducibilidad y la verificación por pares son elementos clave que garantizan la validez de los descubrimientos científicos.\n\nEl método científico ha sido fundamental para todos los avances tecnológicos y médicos que disfrutamos hoy en día.",
+              "duration": 15
+            },
+            {
+              "id": "cien-content-2",
+              "type": "text",
+              "title": "La Célula: Unidad Básica de la Vida",
+              "content": "Todos los seres vivos están formados por células, desde las bacterias unicelulares hasta los organismos multicelulares complejos como los humanos. Las células pueden ser procariotas (sin núcleo definido) o eucariotas (con núcleo).",
+              "duration": 20
+            },
+            {
+              "id": "cien-content-3",
+              "type": "interactive",
+              "title": "Experimento Virtual: Observando Células",
+              "content": "Simulación de microscopio para observar diferentes tipos de células y sus componentes",
+              "duration": 10
+            }
+          ],
+          "triviaQuestions": [
+            {
+              "id": "cien-q1",
+              "question": "¿Cuáles son los pasos básicos del método científico?",
+              "type": "multiple-select",
+              "options": [
+                "Observación",
+                "Hipótesis",
+                "Experimentación",
+                "Opinión personal",
+                "Análisis de datos",
+                "Conclusiones"
+              ],
+              "correctAnswer": 0,
+              "correctAnswers": [0, 1, 2, 4, 5],
+              "explanation": "Los pasos del método científico son: observación, hipótesis, experimentación, análisis de datos y conclusiones. La opinión personal no forma parte del método científico",
+              "timeLimit": 45,
+              "points": 25,
+              "difficulty": "medium",
+              "category": "Método Científico"
+            },
+            {
+              "id": "cien-q2",
+              "question": "¿Cuál es la unidad básica de todos los seres vivos?",
+              "type": "type-answer",
+              "options": [],
+              "correctAnswer": 0,
+              "correctText": "celula",
+              "explanation": "La célula es la unidad estructural y funcional básica de todos los seres vivos",
+              "timeLimit": 30,
+              "points": 15,
+              "difficulty": "easy",
+              "category": "Biología"
+            },
+            {
+              "id": "cien-q3",
+              "question": "¿Cuál es la diferencia entre células procariotas y eucariotas?",
+              "type": "multiple-choice",
+              "options": [
+                "Las procariotas son más grandes",
+                "Las eucariotas tienen núcleo definido",
+                "Las procariotas son solo animales",
+                "No hay diferencia"
+              ],
+              "correctAnswer": 1,
+              "explanation": "Las células eucariotas tienen un núcleo definido rodeado por membrana, mientras que las procariotas no",
+              "timeLimit": 35,
+              "points": 20,
+              "difficulty": "medium",
+              "category": "Biología"
+            },
+            {
+              "id": "cien-q4",
+              "question": "¿Verdadero o Falso? Todos los seres vivos están formados por al menos una célula",
+              "type": "true-false",
+              "options": ["Verdadero", "Falso"],
+              "correctAnswer": 0,
+              "explanation": "Correcto. Todos los seres vivos, desde bacterias unicelulares hasta organismos complejos, están formados por al menos una célula",
+              "timeLimit": 25,
+              "points": 10,
+              "difficulty": "easy",
+              "category": "Biología"
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-03-10",
+      "updatedAt": "2024-12-10",
+      "status": "published",
+      "completionRate": 72,
+      "certificateEnabled": true
+    }
+  ],
+  "enrollments": [
+    {
+      "id": "1",
+      "userId": 1,
+      "courseId": "historia-universal-2024",
+      "enrolledAt": "2024-11-01T08:00:00Z",
+      "progress": 50,
+      "completed": false
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "courseId": "geografia-mundial-2024",
+      "enrolledAt": "2024-11-05T08:00:00Z",
+      "progress": 75,
+      "completed": false
+    },
+    {
+      "id": "3",
+      "userId": 1,
+      "courseId": "ciencias-naturales-2024",
+      "enrolledAt": "2024-11-10T08:00:00Z",
+      "progress": 25,
+      "completed": false
+    },
+    {
+      "id": "4",
+      "userId": 4,
+      "courseId": "geografia-mundial-2024",
+      "enrolledAt": "2024-11-15T08:00:00Z",
+      "progress": 60,
+      "completed": false
+    },
+    {
+      "id": "5",
+      "userId": 4,
+      "courseId": "historia-universal-2024",
+      "enrolledAt": "2024-11-20T08:00:00Z",
+      "progress": 40,
+      "completed": false
+    }
+  ],
+  "activities": [
+    {
+      "id": "1",
+      "userId": 1,
+      "courseId": "historia-universal-2024",
+      "type": "trivia",
+      "score": 85,
+      "data": {
+        "score": 17,
+        "questions": 20,
+        "moduleId": "mod-1"
+      },
+      "completedAt": "2025-01-22T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "courseId": "geografia-mundial-2024",
+      "type": "progress",
+      "score": 90,
+      "data": {
+        "moduleId": "mod-geo-1",
+        "timeSpent": 35
+      },
+      "completedAt": "2025-01-21T15:45:00Z"
+    },
+    {
+      "id": "3",
+      "userId": 4,
+      "courseId": "geografia-mundial-2024",
+      "type": "trivia",
+      "score": 75,
+      "data": {
+        "score": 15,
+        "questions": 20,
+        "moduleId": "mod-geo-1"
+      },
+      "completedAt": "2025-01-20T14:20:00Z"
+    }
+  ],
+  "courseEnrollments": [
+    {
+      "id": "enrollment-1",
+      "userId": "1",
+      "courseId": "historia-universal-2024",
+      "enrollmentDate": "2025-01-15T10:00:00Z",
+      "status": "active",
+      "enrollmentMethod": "manual"
+    },
+    {
+      "id": "enrollment-2",
+      "userId": "1",
+      "courseId": "geografia-mundial-2024",
+      "enrollmentDate": "2025-01-16T14:30:00Z",
+      "status": "active",
+      "enrollmentMethod": "code"
+    },
+    {
+      "id": "enrollment-3",
+      "userId": "1",
+      "courseId": "ciencias-naturales-2024",
+      "enrollmentDate": "2025-01-20T09:15:00Z",
+      "status": "active",
+      "enrollmentMethod": "code"
+    }
+  ]
+}
