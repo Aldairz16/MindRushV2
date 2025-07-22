@@ -44,9 +44,30 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, onCo
       if (savedProgress) {
         const progress = JSON.parse(savedProgress);
         setCompletedModules(progress.completedModules || []);
-        setModuleProgress(progress.moduleProgress || {});
+        
+        // Normalizar progreso de módulos que esté por encima del 100%
+        const normalizedModuleProgress = progress.moduleProgress || {};
+        let hasCorruptedData = false;
+        Object.keys(normalizedModuleProgress).forEach(moduleId => {
+          if (normalizedModuleProgress[moduleId] > 100) {
+            console.log(`Normalizando progreso corrupto del módulo ${moduleId}: ${normalizedModuleProgress[moduleId]}% -> 100%`);
+            normalizedModuleProgress[moduleId] = 100;
+            hasCorruptedData = true;
+          }
+        });
+        
+        setModuleProgress(normalizedModuleProgress);
         setTotalScore(progress.totalScore || 0);
         setTotalQuestions(progress.totalQuestions || 0);
+        
+        // Si había datos corruptos, guardar la versión corregida inmediatamente
+        if (hasCorruptedData) {
+          const correctedProgress = {
+            ...progress,
+            moduleProgress: normalizedModuleProgress
+          };
+          saveProgress(correctedProgress);
+        }
       }
     } catch (error) {
       console.error('Error loading progress:', error);
@@ -99,7 +120,9 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, onCo
   const handleTheoryComplete = () => {
     const module = course.modules[currentModule];
     const newProgress = { ...moduleProgress };
-    newProgress[module.id] = (newProgress[module.id] || 0) + 50; // 50% for theory completion
+    // Agregar 50% pero limitar a máximo 100%
+    const currentProgress = newProgress[module.id] || 0;
+    newProgress[module.id] = Math.min(currentProgress + 50, 100);
     setModuleProgress(newProgress);
     
     if (newProgress[module.id] >= 100) {
@@ -113,7 +136,9 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({ course, onBack, onCo
     const module = course.modules[currentModule];
     const newProgress = { ...moduleProgress };
     const scorePercentage = (score / questions) * 50; // 50% weight for trivia
-    newProgress[module.id] = (newProgress[module.id] || 0) + scorePercentage;
+    // Agregar el porcentaje pero limitar a máximo 100%
+    const currentProgress = newProgress[module.id] || 0;
+    newProgress[module.id] = Math.min(currentProgress + scorePercentage, 100);
     setModuleProgress(newProgress);
     
     setTotalScore(totalScore + score);

@@ -82,26 +82,34 @@ export const TriviaNode: React.FC<TriviaNodeProps> = ({ questions, onComplete, o
     }, 4000);
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = (userSelectedAnswer?: number | number[] | string) => {
     const question = questions[currentQuestion];
     let isCorrect = false;
 
     switch (question.type) {
       case 'multiple-choice':
       case 'true-false':
-        isCorrect = selectedAnswer === question.correctAnswer;
+        // Use the passed parameter or the state value
+        const actualSelectedAnswer = userSelectedAnswer !== undefined ? userSelectedAnswer as number : selectedAnswer;
+        isCorrect = actualSelectedAnswer === question.correctAnswer;
         break;
       case 'type-answer':
-        isCorrect = textAnswer.toLowerCase().trim() === question.correctText?.toLowerCase().trim();
+        // Use the passed parameter or the state value
+        const actualTextAnswer = userSelectedAnswer !== undefined ? userSelectedAnswer as string : textAnswer;
+        isCorrect = actualTextAnswer.toLowerCase().trim() === question.correctText?.toLowerCase().trim();
         break;
       case 'select-image':
-        isCorrect = selectedAnswer === question.correctAnswer;
+        // Use the passed parameter or the state value
+        const actualImageAnswer = userSelectedAnswer !== undefined ? userSelectedAnswer as number : selectedAnswer;
+        isCorrect = actualImageAnswer === question.correctAnswer;
         break;
       case 'order-sequence':
         isCorrect = JSON.stringify(sequenceOrder) === JSON.stringify(question.sequenceOrder);
         break;
       case 'multiple-select':
-        const sortedSelected = [...selectedAnswers].sort();
+        // Use the passed parameter or the state value
+        const actualSelectedAnswers = userSelectedAnswer !== undefined ? userSelectedAnswer as number[] : selectedAnswers;
+        const sortedSelected = [...actualSelectedAnswers].sort();
         const sortedCorrect = [...(question.correctAnswers || [])].sort();
         isCorrect = JSON.stringify(sortedSelected) === JSON.stringify(sortedCorrect);
         break;
@@ -146,7 +154,7 @@ export const TriviaNode: React.FC<TriviaNodeProps> = ({ questions, onComplete, o
       setSelectedAnswer(answerIndex);
       setIsAnswered(true);
       setShowResult(true);
-      checkAnswer();
+      checkAnswer(answerIndex); // Pass the answer index directly
       
       setTimeout(() => {
         nextQuestion();
@@ -164,7 +172,7 @@ export const TriviaNode: React.FC<TriviaNodeProps> = ({ questions, onComplete, o
     
     setIsAnswered(true);
     setShowResult(true);
-    checkAnswer();
+    checkAnswer(selectedAnswers);
     
     setTimeout(() => {
       nextQuestion();
@@ -176,7 +184,7 @@ export const TriviaNode: React.FC<TriviaNodeProps> = ({ questions, onComplete, o
     
     setIsAnswered(true);
     setShowResult(true);
-    checkAnswer();
+    checkAnswer(textAnswer);
     
     setTimeout(() => {
       nextQuestion();

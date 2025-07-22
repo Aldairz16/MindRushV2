@@ -96,10 +96,7 @@
       "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
       "bio": "Administradora de la plataforma MindRush, especializada en gestión educativa y análisis de datos.",
       "location": "Valencia, España",
-      "joinedAt": "2023-01-01T08:00:00Z",
-      "enrolledCourses": [
-        "historia-universal-2024"
-      ]
+      "joinedAt": "2023-01-01T08:00:00Z"
     },
     {
       "id": "4",
@@ -173,7 +170,7 @@
       "difficulty": "Básico",
       "duration": 25,
       "rating": 4.8,
-      "studentsEnrolled": 1248,
+      "studentsEnrolled": 1247,
       "thumbnail": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800",
       "accessCode": "HIST24",
       "isPublic": true,
@@ -787,13 +784,6 @@
       "enrolledAt": "2024-11-20T08:00:00Z",
       "progress": 40,
       "completed": false
-    },
-    {
-      "id": "cbe5",
-      "userId": "3",
-      "courseId": "historia-universal-2024",
-      "enrolledAt": "2025-07-22T17:33:53.259Z",
-      "status": "active"
     }
   ],
   "activities": [
@@ -904,136 +894,6 @@
       },
       "completedAt": "2025-07-22T17:24:49.431Z",
       "timestamp": "2025-07-22T17:24:49.431Z"
-    },
-    {
-      "id": "activity-1753205331559",
-      "userId": "1",
-      "courseId": "historia-universal-2024",
-      "type": "trivia",
-      "score": 0,
-      "data": {
-        "score": 0,
-        "questions": 4,
-        "moduleId": "mod-1"
-      },
-      "completedAt": "2025-07-22T17:28:51.559Z",
-      "timestamp": "2025-07-22T17:28:51.559Z"
-    },
-    {
-      "id": "activity-1753205689237",
-      "userId": "1",
-      "courseId": "historia-universal-2024",
-      "type": "trivia",
-      "score": 12150,
-      "data": {
-        "score": 486,
-        "questions": 4,
-        "moduleId": "mod-1"
-      },
-      "completedAt": "2025-07-22T17:34:49.237Z",
-      "timestamp": "2025-07-22T17:34:49.237Z"
-    },
-    {
-      "id": "activity-1753205689238",
-      "userId": "1",
-      "courseId": "historia-universal-2024",
-      "type": "progress",
-      "data": {
-        "completedModules": [
-          "mod-1"
-        ],
-        "moduleProgress": {},
-        "totalScore": 0,
-        "totalQuestions": 0,
-        "lastUpdated": "2025-07-22T17:34:49.238Z"
-      },
-      "completedAt": "2025-07-22T17:34:49.238Z",
-      "timestamp": "2025-07-22T17:34:49.238Z"
-    },
-    {
-      "id": "activity-1753205702854",
-      "userId": "1",
-      "courseId": "historia-universal-2024",
-      "type": "progress",
-      "data": {
-        "completedModules": [
-          "mod-1"
-        ],
-        "moduleProgress": {
-          "mod-1": 6075
-        },
-        "totalScore": 486,
-        "totalQuestions": 4,
-        "lastUpdated": "2025-07-22T17:35:02.854Z"
-      },
-      "completedAt": "2025-07-22T17:35:02.854Z",
-      "timestamp": "2025-07-22T17:35:02.854Z"
-    },
-    {
-      "id": "activity-1753206043567",
-      "userId": "1",
-      "courseId": "historia-universal-2024",
-      "type": "progress",
-      "data": {
-        "completedModules": [
-          "mod-1"
-        ],
-        "moduleProgress": {
-          "mod-1": 100
-        },
-        "totalScore": 486,
-        "totalQuestions": 4,
-        "lastUpdated": "2025-07-22T17:35:02.854Z"
-      },
-      "completedAt": "2025-07-22T17:40:43.567Z",
-      "timestamp": "2025-07-22T17:40:43.567Z"
-    },
-    {
-      "id": "activity-1753206229069",
-      "userId": "1",
-      "courseId": "geografia-mundial-2024",
-      "type": "trivia",
-      "score": 0,
-      "data": {
-        "score": 0,
-        "questions": 4,
-        "moduleId": "mod-geo-1"
-      },
-      "completedAt": "2025-07-22T17:43:49.069Z",
-      "timestamp": "2025-07-22T17:43:49.069Z"
-    },
-    {
-      "id": "activity-1753206267838",
-      "userId": "1",
-      "courseId": "geografia-mundial-2024",
-      "type": "trivia",
-      "score": 29250,
-      "data": {
-        "score": 1170,
-        "questions": 4,
-        "moduleId": "mod-geo-1"
-      },
-      "completedAt": "2025-07-22T17:44:27.838Z",
-      "timestamp": "2025-07-22T17:44:27.838Z"
-    },
-    {
-      "id": "activity-1753206267839",
-      "userId": "1",
-      "courseId": "geografia-mundial-2024",
-      "type": "progress",
-      "data": {
-        "completedModules": [
-          "mod-geo-1"
-        ],
-        "moduleProgress": {
-          "mod-geo-1": 50
-        },
-        "totalScore": 0,
-        "totalQuestions": 4,
-        "lastUpdated": "2025-07-22T17:44:27.839Z"
-      },
-      "completedAt": "2025-07-22T17:44:27.839Z",
-      "timestamp": "2025-07-22T17:44:27.839Z"
     }
   ],
   "courseEnrollments": [
